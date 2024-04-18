@@ -7,6 +7,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Subject, combineLatest, debounceTime, distinctUntilChanged, filter, map, of } from 'rxjs';
 
 export interface Dog {
   name: string;
@@ -19,7 +20,7 @@ export interface Dog {
 
 @Injectable({ providedIn: 'root' })
 export class DogsService {
-  dogs: Dog[] = [
+  readonly dogs: Dog[] = [
     {
       name: 'Robbie',
       ownerName: 'Esther Fraiser',
@@ -77,4 +78,23 @@ export class DogsService {
       location: 'Detroit, MI',
     },
   ];
+  public readonly dogs$ = of(this.dogs);
+
+  private _dogName$ = new Subject<string>();
+  public readonly dogName$ = this._dogName$.asObservable().pipe(
+    debounceTime(1000),
+    distinctUntilChanged()
+  );
+
+  public filterList$ = combineLatest([this.dogs$, this.dogName$]).pipe(
+    map(([dogs, dogName]) => 
+      dogs.find(dog => dog.name.search(dogName))
+    ),
+    filter(Boolean)
+  );
+
+  public filterDog(dogName: string): void {
+    this._dogName$.next(dogName);
+  }
+
 }

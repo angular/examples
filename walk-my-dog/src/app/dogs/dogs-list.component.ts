@@ -21,8 +21,10 @@ import { DogsListCardComponent } from './dogs-list-card.component';
         Discover Pets to walk near you
       </h2>
     </section>
+    <input type="text" placeholder="Filter by dog name" #filter>
+    <button class="primary" type="button" (click)="filterResults(filter)">Search</button>
     <article class="pet-list">
-      <app-dogs-list-card *ngFor="let dog of dogsService.dogs; let i = index" [index]="i" [dog]="dog"></app-dogs-list-card>
+      <app-dogs-list-card *ngFor="let dog of dogsService.dogs; let i = index" [index]="i" [dog]="dog" />
     </article>
 `,
   styles: [`
@@ -44,6 +46,13 @@ export class DogsListComponent implements OnInit {
   constructor(readonly dogsService: DogsService) { }
 
   ngOnInit(): void {
+    this.dogsService.dogName$.subscribe(console.log);
+    this.dogsService.filterList$.subscribe(console.log);
+  }
+
+
+  filterResults(filter: HTMLInputElement): void {
+    this.dogsService.filterDog(filter.value);
   }
 
 }
