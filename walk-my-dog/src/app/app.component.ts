@@ -7,10 +7,11 @@
  */
 
 import { Component } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  template: `
+    selector: 'app-root',
+    template: `
     <nav>
       <div>
         <a [routerLink]="['/']"><img class="logo" src="assets/dog-walker-logo.svg"></a>
@@ -19,8 +20,8 @@ import { Component } from '@angular/core';
     </nav>
     <router-outlet></router-outlet>
   `,
-  styles: [
-    `
+    styles: [
+        `
   nav {
       display: flex;
       justify-content: space-between;
@@ -42,7 +43,9 @@ import { Component } from '@angular/core';
       height: 40px;
     }
   `
-  ]
+    ],
+    standalone: true,
+    imports: [RouterLink, RouterOutlet]
 })
 export class AppComponent {
   title = 'walk-my-dog';
