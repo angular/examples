@@ -9,8 +9,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { map, Observable } from 'rxjs';
-import { Dog, DogsService } from './dogs.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+
+import { DOGS, Dog } from './dog.model';
 
 @Component({
   selector: 'app-dog-view',
@@ -52,11 +53,12 @@ import { ActivatedRoute } from '@angular/router';
 export class DogViewComponent implements OnInit {
   dog$!: Observable<Dog | undefined>;
 
-  constructor(private dogsService: DogsService, private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.dog$ = this.route.paramMap.pipe(map(params => {
-      return this.dogsService.dogs[Number(params.get('index'))]
+    this.dog$ = this.route.paramMap.pipe(map((params: ParamMap) => {
+      const index = Number(params.get('index'));
+      return DOGS[index];
     }))
   }
 

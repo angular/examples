@@ -8,8 +8,9 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Dog } from './dogs.service';
 import { RouterModule } from '@angular/router';
+
+import { Dog } from './dog.model';
 
 @Component({
   selector: 'app-dogs-list-card',
