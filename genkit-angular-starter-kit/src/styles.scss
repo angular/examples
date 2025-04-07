@@ -1,0 +1,28 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+@use '@angular/material' as mat;
+
+body {
+  font-family: "Source Sans 3", serif;
+  height: 100%;
+  background-color: rgb(234, 244, 247);
+
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+html {
+  height: 100%;
+}
