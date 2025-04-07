@@ -19,7 +19,7 @@ This example will use the Gemini API which provides a generous free tier and doe
 To use the Gemini API, you'll need an API key. If you don't already have one, create a key in Google AI Studio.
 
 1. [Get an API key from Google AI Studio](https://makersuite.google.com/app/apikey)
-1. After you’ve created an API key, set the GEMINI_API_KEY environment variable to your key with the command `export GEMINI_API_KEY=<your API key>`
+1. After you’ve created an API key, set the `GEMINI_API_KEY` environment variable to your key with the command `export GEMINI_API_KEY=<your API key>`
 1. Run `gcloud auth application-default login` to use Vertex AI features
 1. Clone this repository or download the code to your local machine
 1. `cd` into the root folder (e.g., `cd genkit-angular-story-generator`)
