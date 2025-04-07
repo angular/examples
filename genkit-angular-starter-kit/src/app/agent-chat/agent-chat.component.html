@@ -1,0 +1,48 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+ -->
+ <div class="chat-container">
+    <div class="title">Chat with an Agent</div>
+    <div #scrollContainer class="history-body history-container">
+        @if (agentService.agentResource.isLoading()) {
+            <div class="loading-container">
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
+        }
+        @let options = agentService.agentResource.value().options;
+        @if (options.length > 2) {
+            <div class="choices">
+                <h4>Here are some options:</h4>
+                <div>
+                    @for (option of options; track $index) {
+                        <button (click)="userInput = option">{{option}}</button>
+                    }
+                </div>
+            </div>
+        }
+        @for (item of agentService.chat(); track item.id) {
+            @if (item.role === 'USER') {
+                <div class="bubble-container">
+                    <div></div>
+                    <div class="chat user">{{item.text}}</div>
+                </div>
+            } @else if (item.role === 'AGENT') {
+                <div class="bubble-container">
+                    <div class="chat agent">{{item.text}}</div>
+                </div>
+            }
+        }
+    </div>
+    <div class="input-container">
+        <input #userInputEl [(ngModel)]="userInput" (keydown.enter)="onSubmit()" />
+        <button (click)="onSubmit()" [disabled]="agentService.agentResource.isLoading() || userInput === ''">
+            <mat-icon aria-hidden="false" aria-label="send icon" fontIcon="send"></mat-icon>
+        </button>
+    </div>
+</div>

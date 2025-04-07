@@ -1,0 +1,53 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+ -->
+<div class="user-input">
+    @if (isLoading()) {
+        <div class="loading-container">
+            <mat-spinner [diameter]="50" />
+        </div>
+    } @else {
+        @if (isDescriptionFlow()) {
+            <h2>Customize your story</h2>
+        }
+        @if (ratingText()) {
+            <div [class]="`rating rating-${rating()?.toLowerCase()}`">
+                {{ratingText()}}
+            </div>
+        }
+        @let nextQuestion = storyService.premiseResource.value().nextQuestion;
+        <h3>{{isDescriptionFlow() ? nextQuestion : "What should you do next?"}}</h3>
+        <div class="update">
+            <textarea [class]="`${!isDescriptionFlow()} ? 'next-textarea' : ''`" [(ngModel)]="userInput"></textarea>
+            @if (isDescriptionFlow()) {
+                <p>You can also enter any changes you'd like to make to the story</p>
+            }
+            <div class="next-button-container">
+                @let buttonClass = !isDescriptionFlow() ? 'next-button' : '';
+                <button [disabled]="userInput === ''" [class]="buttonClass" (click)="onSubmit()">
+                    @let continueButtonText = storyService.hasStoryStarted() ? 'See what happens next' : 'Begin your adventure';
+                    {{isDescriptionFlow() ? 'Next question' : continueButtonText}}
+                </button>
+                @if (storyService.hasPremiseUpdated()) {
+                    <button [class]="`update-story ${buttonClass}`" (click)="onUpdateStory()">Update Story</button>
+                }
+            </div>
+        </div>
+        @if (options() && options()!.length > 1) {
+            <div class="choices">
+                <h4>Here are some options:</h4>
+                <div>
+                    @for (option of options(); track $index) {
+                        <button [class]="buttonClass" (click)="onClickOption(option)">{{option}}</button>
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>

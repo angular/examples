@@ -1,0 +1,164 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+ .chat-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    width: 40%;
+    box-shadow: 0px 5px 10px rgb(200, 211, 215);
+    background-color: rgb(251, 251, 251);
+    border-radius: 10px;
+
+    .title {
+        font-size: 18px;
+        line-height: 50px;
+        padding: 5px 15px;
+        border-top-right-radius: 5px;
+        box-shadow: 0px 1px 3px rgb(200, 211, 215);
+        border-bottom: none;
+        text-align: center;
+        background-color: rgb(209, 206, 206);
+        color: black;
+        font-weight: bold;
+    }
+
+    .loading-container {
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 40px 15%;
+    }
+
+    .history-body {
+        display: flex;
+        padding: 5px 8px;
+        height: 100%;
+    }
+
+    .history-placeholder {
+        flex-direction: column;
+        text-align: center;
+
+        p {
+            color: gray;
+            font-size: 14px;
+        }
+    }
+
+    .history-container {
+        flex-direction: column-reverse;
+        overflow-y: auto;
+
+        .chat {
+            margin: 10px 0;
+            padding: 6px 10px;
+            border-radius: 12px;
+            box-shadow: 0 1px 5px rgb(200, 211, 215);
+            font-family: "Source Sans 3", serif;
+        }
+
+        .bubble-container {
+            display: flex;
+            justify-content: space-between;
+            
+                .user {
+                    background-color: #ffb8e6;
+                    border-bottom-right-radius: 0;
+                    white-space: pre-wrap;
+                }
+        }
+
+        .agent {
+            background-color: #e0d8f8;
+            display: inline-block;
+            white-space: pre-wrap;
+            border-bottom-left-radius: 0;
+        }
+    }
+
+    .choices {
+        padding: 0 15px;
+
+        h4 {
+            margin: 0px 0 10px 0;
+        }
+
+        button {
+            font-size: 16px;
+            margin: 0 10px 10px 0;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-width: 0;
+            text-align: left;
+          }
+          
+          
+          button:hover {
+            background-color: #963bff;
+            color: white;
+          }
+          
+          button:disabled:hover {
+            background-color: #f9f9f9;
+            color: #b3b3b3;
+          }
+          
+          button:focus {
+            outline: 2px solid #d3c6f6;
+          }
+    }
+
+    p {
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .input-container {
+        display: flex;
+        border-bottom-right-radius: 5px;
+        padding: 10px;
+        justify-content: space-between;
+        background-color: rgb(216, 216, 216);
+        box-shadow: 0px -1px 2px rgb(200, 211, 215);
+
+        button {
+            margin: 0 0 0 10px;
+            align-content: center;
+            border-radius: 20px;
+            line-height: 5px;
+            background-color: #963bff;
+            color: white;
+            padding: 15px 20px;
+            border-width: 0;
+        }
+
+        button:hover {
+            background-color: rgb(73, 32, 175);
+        }
+
+        button:disabled {
+            background-color: #dfdfdf;
+            color: #a1a1a1;
+        }
+
+        input {
+            border-radius: 20px;
+            border: 1px solid black;
+            padding: 10px 20px;
+            width: 100%; 
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: 2px solid #d3c6f6;
+        }
+    }
+}
