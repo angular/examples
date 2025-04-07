@@ -1,0 +1,130 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+.primary-obj {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 18px;
+    font-size: 16px;
+    border-radius: 10px;
+    background-color: #d3c6f6;
+    font-family: "Architects Daughter", serif;
+    margin-bottom: 23px;
+    
+    .primary-header {
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
+}
+
+.story-container {
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid rgb(190, 190, 190);
+    border-top-left-radius: 155px 5px;
+    border-top-right-radius: 10px 155px;
+    border-bottom-left-radius: 155px 5px;
+    border-bottom-right-radius: 5px 100px;
+    background-color: rgb(244, 244, 244);
+    box-shadow: 5px 5px 5px rgb(200, 211, 215);
+    padding: 20px 20px 0 20px;
+    min-width: 375px;
+
+    .comic-box {
+        margin: 0 10px 20px 10px;
+        border: 2px solid rgb(190, 190, 190);
+        background-color: white;
+
+        .comic-text {
+            font-size: 16px;
+            line-height: 20px;
+            padding: 5px 20px 5px 20px;
+            margin-top: 0;
+            white-space: pre-wrap;
+        }
+        
+        .the-end {
+            text-align: center;
+            background-color: rgb(243, 239, 239);
+            width: 100px;
+            margin: 0 auto 25px auto;
+            padding: 8px 0;
+            border-top-left-radius: 155px 5px;
+            border-top-right-radius: 10px 155px;
+            border-bottom-left-radius: 155px 5px;
+            border-bottom-right-radius: 5px 100px;
+            box-shadow: 1px 1px 3px rgb(200, 211, 215);
+        }
+        
+        .loading-img-placeholder {
+            margin: 19px;
+            display: flex;
+            flex-direction: column;
+            width: 275px;
+            height: 275px;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid rgb(190, 190, 190);
+            border-top-left-radius: 155px 5px;
+            border-top-right-radius: 10px 155px;
+            border-bottom-left-radius: 155px 5px;
+            border-bottom-right-radius: 5px 100px;
+            color: white;
+        }
+        
+        .loading-text {
+            background-color: #f9f9f9;
+            margin: 20px 20px;
+            padding: 50px 20px;
+            min-height: 70px;
+            border-radius: 5px;
+        }
+
+        .choice-container {
+            padding: 20px;
+        }
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    .primary-obj {
+        border-radius: 0;
+        margin-bottom: 0;
+        border-top: 2px solid rgb(190, 190, 190);
+    }
+
+    .story-container {
+        display: block;
+        border-radius: 0;
+        border: none;
+        border-top: 2px solid rgb(190, 190, 190);
+        padding: 20px 5px 5px 5px;
+    
+        .comic-box {
+            display: flex;
+            flex-direction: column;
+            
+            .comic-text {
+                padding: 5px 20px;
+            }
+        
+            .loading-img-placeholder {
+                margin: 20px auto 10px auto;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 951px) {
+    .comic-text {
+        width: 275px;
+    }
+
+    .choice-container {
+        width: 275px;
+    }
+}

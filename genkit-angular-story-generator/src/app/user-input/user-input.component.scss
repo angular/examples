@@ -1,0 +1,88 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 450px;
+}
+
+.rating {
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    background-color: rgb(243, 239, 239);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.rating-good {
+    background-color: #b9e0ce;
+}
+
+.rating-bad {
+    background-color: #f4c7c3;
+}
+
+h2, h3 {
+    margin-top: 0;
+}
+
+.update {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .update-story {
+        background-color: #E90464;
+        color: white;
+    }
+
+    .update-story:hover {
+        background-color: #d21d68;
+        color: white;
+    }
+    
+    textarea {
+        border: 1px solid black;
+        height: 60px;
+    }
+    
+    .next-textarea {
+        width: 235px;
+        padding: 15px 25px 15px 15px;
+        line-height: 20px;
+    }
+    
+    p {
+        margin: 0 0 10px 0;
+    }
+
+    .next-button-container {
+        display: flex;
+
+        .update-story {
+            margin-left: 20px;
+        }
+    }
+}
+
+.choices {
+    h4 {
+        margin: 5px 0 10px 0;
+    }
+    
+    button {
+        margin-right: 10px;
+    }    
+}
+
+.next-button {
+    width: 100%;
+    font-size: 14px;
+}

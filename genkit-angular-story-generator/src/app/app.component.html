@@ -1,0 +1,29 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+ -->
+<div class="header">
+  <div class="header-left">
+    <span>Built with</span>
+    <img class="logo" ngSrc="/angular.png" width="160" height="50" priority />
+    <span>+</span>
+    <img class="logo genkit" ngSrc="/genkit.png" width="239" height="40" priority />
+  </div>
+</div>
+
+<div class="body">
+  @if (!storyService.hasStoryStarted()) {
+    <div class="controls">
+      <app-user-input
+        [endpoint]="endpoint"
+        [options]="storyService.premiseResource.value().premiseOptions"
+        [isLoading]="storyService.premiseResource.isLoading()" />
+    </div>
+  }
+  <app-story />
+</div>

@@ -1,0 +1,81 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+.header {
+    font-family: "Architects Daughter", serif;
+    display: flex;
+    font-size: 20px;
+    background-color: #f4f4f4;
+    padding: 5px 20px;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        
+        .logo {
+            margin: 0 10px 0 15px;
+        }
+    }
+}
+
+p {
+    margin-top: 0;
+    padding-top: 5px;
+    white-space: pre-wrap;
+}
+
+.body {
+    display: flex;
+    justify-content: center;
+    margin: 20px 70px;
+    font-family: "Architects Daughter", serif;
+    
+    .controls {
+        display: flex;
+        flex-direction: column;
+        margin-top: 30px;
+        margin-right: 80px;
+        width: 60%;
+        min-width: 375px;    
+    }
+}
+
+@media (max-width: 950px) {
+    .body {
+        display: block;
+        margin: 0;
+
+        .controls {
+            padding: 10px;
+            margin: 5px 0;
+        }
+    }
+
+    .header {
+        padding: 10px;
+        font-size: 16px;
+
+        .logo {
+            width: 30%;
+            height: auto;
+            margin: 0 5px 0 8px !important;
+        }
+
+        .genkit {
+            width: 40%;
+            height: auto;
+        }
+    }
+}
+
+@media (min-width: 1500px) {
+    .controls {
+        max-width: 20%;
+    }
+}

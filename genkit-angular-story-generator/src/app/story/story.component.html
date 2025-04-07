@@ -1,0 +1,54 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+ -->
+ @if (!storyResource.isLoading() || storyService.hasStoryStarted()) {
+    <div class="primary-obj">
+      <div>
+        <div class="primary-header">Your primary objective: </div>
+        <b>{{primaryObjective()}} ({{progress() | percent}} complete)</b>
+      </div>
+    </div>
+}
+<div class="story-container">
+    @if (storyParts().length > 0) {
+        @for (storyPart of storyParts(); track $index) {
+            <div class="comic-box">
+                <app-image [story]="storyPart" />
+                <p class="comic-text">{{storyPart.trim()}}</p>
+                @let isLastStoryPart = $index === storyParts().length - 1;
+                @if (showTheEnd() && isLastStoryPart) {
+                    <p class="the-end">The End</p>
+                }
+            </div>
+        }
+    }
+    @if (storyResource.isLoading() || storyParts().length === 0) {
+        @for (story of loadingStories; track $index) {
+            <div class="comic-box">
+                <div class="loading-img-placeholder">
+                    <mat-spinner [diameter]="50" />
+                </div>
+                <div class="loading-text">
+                    <mat-progress-bar mode="indeterminate" />
+                </div>
+            </div>
+        }
+    }
+    @if (!isStoryOver()) {
+        <div class="comic-box">
+            <div class="choice-container">
+                <app-user-input
+                    [endpoint]="endpoint()"
+                    [options]="storyResource.value().options"
+                    [isLoading]="storyResource.isLoading()"
+                    [rating]="storyResource.value().rating" />
+            </div>
+        </div>
+    }
+</div>

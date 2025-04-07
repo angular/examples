@@ -1,0 +1,21 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+ -->
+@if (isLoading()) {
+    <div class="loading-img-placeholder">
+        <mat-spinner [diameter]="50" />
+    </div>
+} @else if (imgResource.hasValue() && imgResource.value() === '') {
+    <div class="img-placeholder" (click)="imgResource.reload()">
+        <mat-icon aria-hidden="false" aria-label="Reload image icon" fontIcon="refresh"></mat-icon>
+        <p>Failed to load image. Click to retry.</p>
+    </div>
+} @else {
+  <img [src]="imgResource.value()" />
+}

@@ -1,0 +1,69 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+img {
+    border-top-left-radius: 155px 5px;
+    border-top-right-radius: 7px 155px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    display: block;
+    margin: auto;
+    height: 275px;
+    margin-top: 18px;
+    margin-bottom: 10px;
+}
+
+
+.img-placeholder {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 275px;
+    height: 275px;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgb(190, 190, 190);
+    border-top-left-radius: 155px 5px;
+    border-top-right-radius: 10px 155px;
+    border-bottom-left-radius: 155px 5px;
+    border-bottom-right-radius: 5px 100px;
+    color: gray;
+}
+
+.img-placeholder:hover {
+    background-color: #c1c2c4;
+    cursor: default;
+}
+
+.loading-img-placeholder {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 275px;
+    height: 275px;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgb(190, 190, 190);
+    border-top-left-radius: 155px 5px;
+    border-top-right-radius: 10px 155px;
+    border-bottom-left-radius: 155px 5px;
+    border-bottom-right-radius: 5px 100px;
+    color: white;
+}
+
+.loading-img-placeholder:hover {
+    background-color: white;
+}
+
+.mat-icon {
+    color: gray;
+    transform: scale(2);
+}

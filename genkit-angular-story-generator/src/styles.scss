@@ -1,0 +1,55 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+body {
+    background-color: rgb(253, 253, 253);
+    margin: 0;
+}
+
+textarea {
+    height: 200px;
+}
+
+textarea, input {
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    resize: none;
+    font-family: "Roboto", serif;
+}
+
+textarea:focus, input:focus {
+    outline: 2px solid #d3c6f6;
+}
+
+button {
+    font-size: 16px;
+    margin-bottom: 10px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border-width: 0;
+    font-family: "Architects Daughter", serif;
+    font-weight: bold;
+}
+
+
+button:hover {
+    background-color: #963bff;
+    color: white;
+}
+
+button:disabled:hover {
+    background-color: #f9f9f9;
+    color: #b3b3b3;
+}
+
+button:focus {
+    outline: 2px solid #d3c6f6;
+}
