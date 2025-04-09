@@ -1,6 +1,6 @@
-# Firebase Genkit x Angular Starter Kit
+# Genkit x Angular Starter Kit
 
-This repository contains everything you need to create an application using Firebase Genkit with Angular to build your next great application.
+This repository contains everything you need to create an application using Genkit with Angular to build your next great application.
 
 This example demonstrates how to use Genkit flows to create a persistent chat session with an agent. However, you can use the same patterns
 in this repository to create an application that runs any arbitrary [Genkit flow](https://firebase.google.com/docs/genkit/flows) you create,
@@ -20,7 +20,7 @@ This example will use the Gemini API which provides a generous free tier and doe
 To use the Gemini API, you'll need an API key. If you don't already have one, create a key in Google AI Studio.
 
 1. [Get an API key from Google AI Studio](https://makersuite.google.com/app/apikey)
-1. After you’ve created an API key, set the GEMINI_API_KEY environment variable to your key with the command `export GEMINI_API_KEY=<your API key>`
+1. After you’ve created an API key, set the `GEMINI_API_KEY` environment variable to your key with the command `export GEMINI_API_KEY=<your API key>`
 1. Clone this repository or download the code to your local machine
 1. `cd` into the root folder (e.g., `cd genkit-angular-starter-kit`)
 1. Install the dependencies with `npm install`
@@ -42,6 +42,15 @@ The client calls the route from `src/agent.service.ts` using the `runFlow` helpe
 by the Genkit client.
 
 You can customize this flow or even add new flows following this same pattern. We're excited to see what you build! Happy coding!
+
+## Looking for inspiration?
+
+For a more advanced example of using Genkit with Angular, check out the 
+[genkit-angular-story-generator repo](../genkit-angular-story-generator/), which is an interactive
+graphic novel builder.
+
+Here's an example screenshot from the running application:
+![Alt text](../genkit-angular-story-generator/screenshot.png "a screenshot of the running app")
 
 ## Genkit Developer UI
 
