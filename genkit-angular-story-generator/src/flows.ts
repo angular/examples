@@ -267,7 +267,8 @@ const imgBlobFlow = ai.defineFlow(
                 output: { format: 'media' },
             });
             return response.message!.content[0].media!.url;
-        } catch {
+        } catch(e) {
+            console.log(e);
             return '';
         }
     }
