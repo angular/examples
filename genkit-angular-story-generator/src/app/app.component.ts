@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.dev/license
  */
-import { Component, signal, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { StoryComponent } from './story/story.component';
 import { UserInputComponent } from './user-input/user-input.component';

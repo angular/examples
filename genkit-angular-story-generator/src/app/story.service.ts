@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.dev/license
  */
-import { Injectable, signal, linkedSignal, resource, computed } from '@angular/core';
+import { Injectable, signal, linkedSignal, resource } from '@angular/core';
 import { runFlow } from 'genkit/beta/client';
 
 export const DESCRIPTION_FLOW = 'descriptionFlow';
@@ -27,7 +27,9 @@ export class StoryService {
   storyInput = signal('');
   // Only set this on the initial request
 
-  // Only set this on the first request
+  // Only set this on the first request.
+  // Note: this approach is for demonstration purposes. Consider alternative approaches to
+  // session management in an actual application.
   sessionId = linkedSignal<string, string>({
     source: () => this.premiseResource.value().storyPremise,
     computation: (_agentResponse, previous) =>
@@ -36,7 +38,7 @@ export class StoryService {
 
   // Used to determine whether to show the update story button in the UserInputComponenet
   hasPremiseUpdated = linkedSignal<string, boolean>({
-    source: () => (this.premiseResource.value().storyPremise),
+    source: () => this.premiseResource.value().storyPremise,
     computation: (newPremise, previous) => (previous || false) && newPremise !== previous!.source
   });
 
