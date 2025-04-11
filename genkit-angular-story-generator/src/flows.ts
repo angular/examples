@@ -248,7 +248,8 @@ async function genImgBlob(story: string, sessionId: string): Promise<string> {
     const chat = session.chat({ sessionId, model });
     const { text: storyImgDescr } = await chat.send(`
         Describe an image that the captures the essence of this story: ${story}.
-        Do not use any words indicating violence or profanity. Return a string only.`);
+        Do not use any words indicating violence or profanity. Return a string only.
+        Do not return JSON.`);
     const imgPrompt = createImgPrompt(storyImgDescr);
     return await imgBlobFlow(imgPrompt);
 }
