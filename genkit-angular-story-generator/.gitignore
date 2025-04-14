@@ -107,6 +107,3 @@ node_modules/
 # dataconnect generated files
 .dataconnect
 
-# session data
-session-stores/
-

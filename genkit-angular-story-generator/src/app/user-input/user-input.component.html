@@ -34,7 +34,7 @@
                     @let continueButtonText = storyService.hasStoryStarted() ? 'See what happens next' : 'Begin your adventure';
                     {{isDescriptionFlow() ? 'Next question' : continueButtonText}}
                 </button>
-                @if (storyService.hasPremiseUpdated()) {
+                @if (storyService.hasPremiseUpdated() && !storyService.premiseResource.isLoading()) {
                     <button [class]="`update-story ${buttonClass}`" (click)="onUpdateStory()">Update Story</button>
                 }
             </div>

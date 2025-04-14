@@ -11,7 +11,6 @@ import { imagen3Fast, vertexAI, gemini15Pro } from '@genkit-ai/vertexai';
 import { googleAI, gemini20Flash } from "@genkit-ai/googleai";
 import { beginStoryPrompt, createImgPrompt, continuePrompt, descriptionPrompt, preamblePrompt } from './prompts';
 import { parse } from 'partial-json';
-import { readFile, writeFile } from "node:fs/promises";
 
 // Defined twice to easily swap models
 const model = gemini20Flash;
@@ -21,167 +20,169 @@ const ai = genkit({
 });
 
 const preamble = ai.definePrompt(
-    { name: 'preamble' },
-    preamblePrompt
+  { name: 'preamble' },
+  preamblePrompt
 );
 
 interface MyState {
-    primaryObjective?: string;
-    milestones?: string[];
-    currentMilestone?: string;
+  primaryObjective?: string;
+  milestones?: string[];
+  currentMilestone?: string;
 }
 
 const DescriptionOutput = z.object({
-    storyPremise: z.string(),
-    nextQuestion: z.string(),
-    premiseOptions: z.array(z.string())
+  storyPremise: z.string(),
+  nextQuestion: z.string(),
+  premiseOptions: z.array(z.string())
 });
 
 export const descriptionFlow = ai.defineFlow(
-    {
-        name: 'descriptionFlow',
-        inputSchema: z.object({
-            userInput: z.optional(z.string()),
-            sessionId: z.string(),
-            clearSession: z.boolean()
-        }),
-        outputSchema: DescriptionOutput
-    },
-    async ({ userInput, sessionId, clearSession }) => {
-        let chat: Chat;
+  {
+    name: 'descriptionFlow',
+    inputSchema: z.object({
+      userInput: z.optional(z.string()),
+      sessionId: z.string(),
+      clearSession: z.boolean()
+    }),
+    outputSchema: DescriptionOutput
+  },
+  async ({ userInput, sessionId, clearSession }) => {
+    let chat: Chat;
 
-        let session = ai.createSession<MyState>({
-            store: new JsonSessionStore(),
-            sessionId,
-            initialState: {}
-          });
-
-        if (clearSession) {
-            session.updateState({});
-            chat = session.chat(preamble, { sessionId, model });
-            await session.updateMessages(sessionId, []);
-        } else {
-            chat = session.chat({ sessionId, model });
-        }
-        try {
-            const { text } = await chat.send(descriptionPrompt(userInput || ''));
-            return parse(maybeStripMarkdown(text));
-        } catch {
-            return {
-                storyPremise: '',
-                nextQuestion: 'Tell me more about the story',
-                premiseOptions: []
-            }
-        }
+    if (clearSession) {
+      const session = ai.createSession<MyState>({
+        store: new JsonSessionStore(),
+        sessionId,
+        initialState: {}
+      });
+      session.updateState({});
+      chat = session.chat(preamble, { sessionId, model });
+      await session.updateMessages(sessionId, []);
+    } else {
+      const session = await ai.loadSession(sessionId, {
+        store: new JsonSessionStore(),
+      });
+      chat = session.chat({ sessionId, model });
     }
+    try {
+      const { text } = await chat.send(descriptionPrompt(userInput || ''));
+      return parse(maybeStripMarkdown(text));
+    } catch {
+      return {
+        storyPremise: '',
+        nextQuestion: 'Tell me more about the story',
+        premiseOptions: []
+      }
+    }
+  }
 );
 
 const StoryDetail = z.object({
-    story: z.optional(z.string()),
-    storyParts: z.array(z.string()),
-    primaryObjective: z.string(),
-    milestones: z.array(z.string()),
-    progress: z.number(),
-    choices: z.array(z.object({
-        choice: z.string(),
-        rating: z.string()
-    }))
+  story: z.optional(z.string()),
+  storyParts: z.array(z.string()),
+  primaryObjective: z.string(),
+  milestones: z.array(z.string()),
+  progress: z.number(),
+  choices: z.array(z.object({
+    choice: z.string(),
+    rating: z.string()
+  }))
 });
 
 const StoryOutput = z.object({
-    storyParts: z.array(z.string()),
-    options: z.array(z.string()),
-    primaryObjective: z.string(),
-    progress: z.number()
+  storyParts: z.array(z.string()),
+  options: z.array(z.string()),
+  primaryObjective: z.string(),
+  progress: z.number()
 });
 
 export const beginStoryFlow = ai.defineFlow(
-    {
-        name: 'beginStoryFlow',
-        inputSchema: z.object({
-            userInput: z.string(),
-            sessionId: z.string(),
-        }),
-        outputSchema: StoryOutput
-    },
-    async ({ userInput, sessionId }) => {
-        let storyParts: string[] = [];
-        let options: string[] = [];
-        let primaryObjective = '';
-        try {
-            const session = await ai.loadSession(sessionId, {
-                store: new JsonSessionStore(),
-            });
-            const chat = session.chat({ sessionId, model });
-            const { text } = await chat.send(beginStoryPrompt(userInput));
-            let storyDetail: z.infer<typeof StoryDetail>;
-            storyDetail = parse(maybeStripMarkdown(text));
-            storyParts = storyDetail.storyParts;
-            primaryObjective = storyDetail.primaryObjective;
-            session.updateState({
-                primaryObjective,
-                milestones: storyDetail.milestones,
-                currentMilestone: storyDetail.milestones[0]
-            });
-            storyDetail.progress = 0;
-            options = storyDetail.choices.map(choice => choice.choice);
-        } catch (e) {
-            console.log(e);
-        }
-        return { storyParts, options, progress: 0, primaryObjective };
+  {
+    name: 'beginStoryFlow',
+    inputSchema: z.object({
+      userInput: z.string(),
+      sessionId: z.string(),
+    }),
+    outputSchema: StoryOutput
+  },
+  async ({ userInput, sessionId }) => {
+    let storyParts: string[] = [];
+    let options: string[] = [];
+    let primaryObjective = '';
+    try {
+      const session = await ai.loadSession(sessionId, {
+        store: new JsonSessionStore(),
+      });
+      const chat = session.chat({ sessionId, model });
+      const { text } = await chat.send(beginStoryPrompt(userInput));
+      let storyDetail: z.infer<typeof StoryDetail>;
+      storyDetail = parse(maybeStripMarkdown(text));
+      storyParts = storyDetail.storyParts;
+      primaryObjective = storyDetail.primaryObjective;
+      session.updateState({
+        primaryObjective,
+        milestones: storyDetail.milestones,
+        currentMilestone: storyDetail.milestones[0]
+      });
+      storyDetail.progress = 0;
+      options = storyDetail.choices.map(choice => choice.choice);
+    } catch (e) {
+      console.log(e);
     }
+    return { storyParts, options, progress: 0, primaryObjective };
+  }
 );
 
 const ContStoryDetail = z.object({
-    story: z.optional(z.string()),
-    storyParts: z.array(z.string()),
-    rating: z.string(),
-    primaryObjective: z.string(),
-    achievedCurrentMilestone: z.boolean(),
-    progress: z.number(),
-    choices: z.array(z.object({
-        choice: z.string(),
-        rating: z.string()
-    })),
+  story: z.optional(z.string()),
+  storyParts: z.array(z.string()),
+  rating: z.string(),
+  primaryObjective: z.string(),
+  achievedCurrentMilestone: z.boolean(),
+  progress: z.number(),
+  choices: z.array(z.object({
+    choice: z.string(),
+    rating: z.string()
+  })),
 });
 
 export const continueStoryFlow = ai.defineFlow(
-    {
-        name: 'continueStoryFlow',
-        inputSchema: z.object({
-            userInput: z.string(),
-            sessionId: z.string()
-        }),
-        outputSchema: StoryOutput.extend({ rating: z.string() })
-    },
-    async ({ userInput, sessionId}) => {
-        const session = await ai.loadSession(sessionId, {
-            store: new JsonSessionStore(),
-        });
-        const chat = session.chat({ sessionId, model });
+  {
+    name: 'continueStoryFlow',
+    inputSchema: z.object({
+      userInput: z.string(),
+      sessionId: z.string()
+    }),
+    outputSchema: StoryOutput.extend({ rating: z.string() })
+  },
+  async ({ userInput, sessionId }) => {
+    const session = await ai.loadSession(sessionId, {
+      store: new JsonSessionStore(),
+    });
+    const chat = session.chat({ sessionId, model });
 
-        let storyParts: string[] = [];
-        let options: string[] = [];
-        let rating: string = 'NEUTRAL';
-        let primaryObjective = session.state.primaryObjective;
-        let progress = -1;
+    let storyParts: string[] = [];
+    let options: string[] = [];
+    let rating: string = 'NEUTRAL';
+    let primaryObjective = session.state.primaryObjective;
+    let progress = -1;
 
-        try {
-            const { text } = await chat.send(continuePrompt(userInput, session.state.currentMilestone));
-            const storyDetail: z.infer<typeof ContStoryDetail> = parse(maybeStripMarkdown(text));
-            storyParts = storyDetail.storyParts;
-            options = storyDetail.choices.map(choice => choice.choice);
-            rating = storyDetail.rating;
-            const acheivedMilestone = storyDetail.achievedCurrentMilestone;
-            const progressResponse = await handleProgress(storyParts, acheivedMilestone, sessionId);
-            storyParts = progressResponse.storyParts;
-            progress = progressResponse.progress;
-            primaryObjective = session.state.primaryObjective;
-        } catch (e) {
-            console.log(e);
-        }
-        return { storyParts, options, primaryObjective, progress, rating };
+    try {
+      const { text } = await chat.send(continuePrompt(userInput, session.state.currentMilestone));
+      const storyDetail: z.infer<typeof ContStoryDetail> = parse(maybeStripMarkdown(text));
+      storyParts = storyDetail.storyParts;
+      options = storyDetail.choices.map(choice => choice.choice);
+      rating = storyDetail.rating;
+      const acheivedMilestone = storyDetail.achievedCurrentMilestone;
+      const progressResponse = await handleProgress(storyParts, acheivedMilestone, sessionId);
+      storyParts = progressResponse.storyParts;
+      progress = progressResponse.progress;
+      primaryObjective = session.state.primaryObjective;
+    } catch (e) {
+      console.log(e);
     }
+    return { storyParts, options, primaryObjective, progress, rating };
+  }
 );
 
 /**
@@ -197,101 +198,101 @@ export const continueStoryFlow = ai.defineFlow(
  * @returns updated storyParts and progress
  */
 async function handleProgress(
-        storyParts: string[],
-        achievedMilestone: boolean,
-        sessionId: string): Promise<{ storyParts: string[], progress: number }> {
-    const session = await ai.loadSession(sessionId, {
-        store: new JsonSessionStore(),
-    });
-    let currentMilestone = session.state.currentMilestone;
-    const milestones = session.state.milestones;
-    const finalMilestone = milestones[milestones.length - 1];
-    let progress = milestones.indexOf(currentMilestone) / milestones.length;
-    if (achievedMilestone && currentMilestone === finalMilestone) {
-        progress = 1;
-        const storyEnding = await endStoryFlow(sessionId);
-        storyParts = [...storyParts, ...storyEnding];
-    } else if (achievedMilestone) {
-        const nextMilestoneIndex = milestones.indexOf(currentMilestone) + 1;
-        currentMilestone = milestones[nextMilestoneIndex];
-        progress = nextMilestoneIndex / milestones.length;
-        session.updateState({ ...session.state, currentMilestone });
-    }
-    return { storyParts, progress };
+  storyParts: string[],
+  achievedMilestone: boolean,
+  sessionId: string): Promise<{ storyParts: string[], progress: number }> {
+  const session = await ai.loadSession(sessionId, {
+    store: new JsonSessionStore(),
+  });
+  let currentMilestone = session.state.currentMilestone;
+  const milestones = session.state.milestones;
+  const finalMilestone = milestones[milestones.length - 1];
+  let progress = milestones.indexOf(currentMilestone) / milestones.length;
+  if (achievedMilestone && currentMilestone === finalMilestone) {
+    progress = 1;
+    const storyEnding = await endStoryFlow(sessionId);
+    storyParts = [...storyParts, ...storyEnding];
+  } else if (achievedMilestone) {
+    const nextMilestoneIndex = milestones.indexOf(currentMilestone) + 1;
+    currentMilestone = milestones[nextMilestoneIndex];
+    progress = nextMilestoneIndex / milestones.length;
+    session.updateState({ ...session.state, currentMilestone });
+  }
+  return { storyParts, progress };
 }
 
 const endStoryFlow = ai.defineFlow(
-    {
-        name: 'endStoryFlow',
-        inputSchema: z.string(),
-        outputSchema: z.array(z.string())
-    },
-    async (sessionId) => {
-        try {
-            const session = await ai.loadSession(sessionId, {
-                store: new JsonSessionStore(),
-            });
-            const chat = session.chat({ sessionId, model });
-            const { text } = await chat.send(`
-                The characters have achieved their primary objective.
-                Write the conclusion of the story. Don't repeat any
-                of the story. This next part should be a max of 200 words.
-                Split the story into 3 parts of similar length. Return an 
-                array of strings with the story parts.
-            `);
-            return parse(maybeStripMarkdown(text));
-        } catch {
-            return [];
-        }
-    }  
+  {
+    name: 'endStoryFlow',
+    inputSchema: z.string(),
+    outputSchema: z.array(z.string())
+  },
+  async (sessionId) => {
+    try {
+      const session = await ai.loadSession(sessionId, {
+        store: new JsonSessionStore(),
+      });
+      const chat = session.chat({ sessionId, model });
+      const { text } = await chat.send(`
+          The characters have achieved their primary objective.
+          Write the conclusion of the story. Don't repeat any
+          of the story. This next part should be a max of 200 words.
+          Split the story into 3 parts of similar length. Return an 
+          array of strings with the story parts.
+      `);
+      return parse(maybeStripMarkdown(text));
+    } catch {
+      return [];
+    }
+  }
 );
 
 export const genImgFlow = ai.defineFlow(
-    {
-        name: 'genImgFlow',
-        inputSchema: z.object({
-            story: z.string(),
-            sessionId: z.string()
-        }),
-        outputSchema: z.string()
-    },
-    async ({ story, sessionId }) => {
-        return await genImgBlob(story, sessionId);
-    }
+  {
+    name: 'genImgFlow',
+    inputSchema: z.object({
+      story: z.string(),
+      sessionId: z.string()
+    }),
+    outputSchema: z.string()
+  },
+  async ({ story, sessionId }) => {
+    return await genImgBlob(story, sessionId);
+  }
 );
 
 async function genImgBlob(story: string, sessionId: string): Promise<string> {
-    const session = await ai.loadSession(sessionId, {
-        store: new JsonSessionStore(),
-    });
-    const chat = session.chat({ sessionId, model });
-    const { text: storyImgDescr } = await chat.send(`
+  const session = await ai.loadSession(sessionId, {
+    store: new JsonSessionStore(),
+  });
+  const chat = session.chat({ sessionId, model });
+  const { text: storyImgDescr } = await chat.send(`
         Describe an image that the captures the essence of this story: ${story}.
         Do not use any words indicating violence or profanity. Return a string only.
         Do not return JSON.`);
-    const imgPrompt = createImgPrompt(storyImgDescr);
-    return await imgBlobFlow(imgPrompt);
+  const imgPrompt = createImgPrompt(storyImgDescr);
+  return await imgBlobFlow(imgPrompt);
 }
 
 const imgBlobFlow = ai.defineFlow(
-    {
-        name: 'imgBlobFlow',
-        inputSchema: z.string(),
-        outputSchema: z.string()
-    },
-    async (prompt) => {
-        try {
-            const response = await ai.generate({
-                model: imagen3Fast,
-                prompt,
-                output: { format: 'media' },
-            });
-            return response.message!.content[0].media!.url;
-        } catch(e) {
-            console.log(e);
-            return '';
-        }
+  {
+    name: 'imgBlobFlow',
+    inputSchema: z.string(),
+    outputSchema: z.string()
+  },
+  async (prompt) => {
+    try {
+      const response = await ai.generate({
+        model: imagen3Fast,
+        prompt,
+        output: { format: 'media' },
+      });
+      return response.message!.content[0].media!.url;
+    } catch (e) {
+      console.log(e);
+      return '';
     }
+  }
 );
 
 const markdownRegex = /^\s*(```json)?((.|\n)*?)(```)?\s*$/i;
@@ -303,19 +304,19 @@ function maybeStripMarkdown(withMarkdown: string) {
   return mdMatch[2];
 }
 
+// For demonstration purposes only. It is recommended to use a proper data
+// store in a production application.
+const sessionStore: { [key: string]: SessionData } = {};
 class JsonSessionStore<S = any> implements SessionStore<S> {
   async get(sessionId: string): Promise<SessionData<S> | undefined> {
-    try {
-      const s = await readFile(`session-stores/${sessionId}.json`, { encoding: 'utf8'});
-      const data = JSON.parse(s);
-      return data;
-    } catch {
+    if (sessionId in sessionStore)
+      return sessionStore[sessionId];
+    else {
       return undefined;
     }
   }
 
   async save(sessionId: string, sessionData: SessionData<S>): Promise<void> {
-    const s = JSON.stringify(sessionData);
-    await writeFile(`session-stores/${sessionId}.json`, s, { encoding: 'utf8' });
+    sessionStore[sessionId] = sessionData;
   }
 }

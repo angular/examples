@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.dev/license
  */
-import { Injectable, signal, linkedSignal, resource, computed } from '@angular/core';
+import { Injectable, signal, linkedSignal, resource } from '@angular/core';
 import { runFlow } from 'genkit/beta/client';
 
 export const DESCRIPTION_FLOW = 'descriptionFlow';
