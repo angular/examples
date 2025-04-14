@@ -37,7 +37,6 @@ export class UserInputComponent {
   }
 
   onSubmit(): void {
-    console.log(this.storyService.sessionId());
     if (this.isDescriptionFlow()) {
       this.storyService.premiseInput.set(this.userInput);
     } else {
