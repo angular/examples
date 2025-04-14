@@ -5,12 +5,13 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.dev/license
  */
-import { Chat, genkit, Session } from "genkit/beta";
+import { Chat, genkit, Session, SessionData, SessionStore } from "genkit/beta";
 import { z } from "zod";
 import { imagen3Fast, vertexAI, gemini15Pro } from '@genkit-ai/vertexai';
 import { googleAI, gemini20Flash } from "@genkit-ai/googleai";
 import { beginStoryPrompt, createImgPrompt, continuePrompt, descriptionPrompt, preamblePrompt } from './prompts';
 import { parse } from 'partial-json';
+import { readFile, writeFile } from "node:fs/promises";
 
 // Defined twice to easily swap models
 const model = gemini20Flash;
@@ -28,8 +29,7 @@ interface MyState {
     primaryObjective?: string;
     milestones?: string[];
     currentMilestone?: string;
-  }
-let session: Session;
+}
 
 const DescriptionOutput = z.object({
     storyPremise: z.string(),
@@ -49,11 +49,15 @@ export const descriptionFlow = ai.defineFlow(
     },
     async ({ userInput, sessionId, clearSession }) => {
         let chat: Chat;
-        if (clearSession || !session) {
-            session = ai.createSession<MyState>({
-                sessionId,
-                initialState: {},
-            });
+
+        let session = ai.createSession<MyState>({
+            store: new JsonSessionStore(),
+            sessionId,
+            initialState: {}
+          });
+
+        if (clearSession) {
+            session.updateState({});
             chat = session.chat(preamble, { sessionId, model });
             await session.updateMessages(sessionId, []);
         } else {
@@ -96,7 +100,7 @@ export const beginStoryFlow = ai.defineFlow(
         name: 'beginStoryFlow',
         inputSchema: z.object({
             userInput: z.string(),
-            sessionId: z.string()
+            sessionId: z.string(),
         }),
         outputSchema: StoryOutput
     },
@@ -105,6 +109,9 @@ export const beginStoryFlow = ai.defineFlow(
         let options: string[] = [];
         let primaryObjective = '';
         try {
+            const session = await ai.loadSession(sessionId, {
+                store: new JsonSessionStore(),
+            });
             const chat = session.chat({ sessionId, model });
             const { text } = await chat.send(beginStoryPrompt(userInput));
             let storyDetail: z.infer<typeof StoryDetail>;
@@ -148,6 +155,9 @@ export const continueStoryFlow = ai.defineFlow(
         outputSchema: StoryOutput.extend({ rating: z.string() })
     },
     async ({ userInput, sessionId}) => {
+        const session = await ai.loadSession(sessionId, {
+            store: new JsonSessionStore(),
+        });
         const chat = session.chat({ sessionId, model });
 
         let storyParts: string[] = [];
@@ -190,6 +200,9 @@ async function handleProgress(
         storyParts: string[],
         achievedMilestone: boolean,
         sessionId: string): Promise<{ storyParts: string[], progress: number }> {
+    const session = await ai.loadSession(sessionId, {
+        store: new JsonSessionStore(),
+    });
     let currentMilestone = session.state.currentMilestone;
     const milestones = session.state.milestones;
     const finalMilestone = milestones[milestones.length - 1];
@@ -215,6 +228,9 @@ const endStoryFlow = ai.defineFlow(
     },
     async (sessionId) => {
         try {
+            const session = await ai.loadSession(sessionId, {
+                store: new JsonSessionStore(),
+            });
             const chat = session.chat({ sessionId, model });
             const { text } = await chat.send(`
                 The characters have achieved their primary objective.
@@ -245,6 +261,9 @@ export const genImgFlow = ai.defineFlow(
 );
 
 async function genImgBlob(story: string, sessionId: string): Promise<string> {
+    const session = await ai.loadSession(sessionId, {
+        store: new JsonSessionStore(),
+    });
     const chat = session.chat({ sessionId, model });
     const { text: storyImgDescr } = await chat.send(`
         Describe an image that the captures the essence of this story: ${story}.
@@ -282,4 +301,21 @@ function maybeStripMarkdown(withMarkdown: string) {
     return withMarkdown;
   }
   return mdMatch[2];
+}
+
+class JsonSessionStore<S = any> implements SessionStore<S> {
+  async get(sessionId: string): Promise<SessionData<S> | undefined> {
+    try {
+      const s = await readFile(`session-stores/${sessionId}.json`, { encoding: 'utf8'});
+      const data = JSON.parse(s);
+      return data;
+    } catch {
+      return undefined;
+    }
+  }
+
+  async save(sessionId: string, sessionData: SessionData<S>): Promise<void> {
+    const s = JSON.stringify(sessionData);
+    await writeFile(`session-stores/${sessionId}.json`, s, { encoding: 'utf8' });
+  }
 }
