@@ -20,7 +20,7 @@ const DEFAULT_STORY: StoryData = {
   primaryObjective: '',
   storyParts: [],
   options: [],
-  rating: 'NEUTRAL',
+  rating: '',
   progress: 0
 };
 

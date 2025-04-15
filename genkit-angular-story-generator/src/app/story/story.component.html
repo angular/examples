@@ -7,7 +7,7 @@
  * found in the LICENSE file at https://angular.dev/license
  *
  -->
- @if (!storyResource.isLoading() || storyService.hasStoryStarted()) {
+ @if (storyParts().length > 0) {
     <div class="primary-obj">
       <div>
         <div class="primary-header">Your primary objective: </div>

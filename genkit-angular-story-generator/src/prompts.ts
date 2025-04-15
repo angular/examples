@@ -215,6 +215,6 @@ export function beginStoryPrompt(description: string): string {
 }
 
 export function createImgPrompt(story: string): string {
-    return `Create picture of ${String(story)}. It should be in an illustrative, storybook style.
+    return `Create picture of ${String(story)}. It should be in an photo-realistic style.
         Do not include any words or modals in the image.`;
 }
