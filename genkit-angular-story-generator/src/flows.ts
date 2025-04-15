@@ -5,9 +5,9 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.dev/license
  */
-import { Chat, genkit, Session, SessionData, SessionStore } from "genkit/beta";
+import { Chat, genkit, SessionData, SessionStore } from "genkit/beta";
 import { z } from "zod";
-import { imagen3Fast, vertexAI, gemini15Pro } from '@genkit-ai/vertexai';
+import { imagen3Fast, vertexAI } from '@genkit-ai/vertexai';
 import { googleAI, gemini20Flash } from "@genkit-ai/googleai";
 import { beginStoryPrompt, createImgPrompt, continuePrompt, descriptionPrompt, preamblePrompt } from './prompts';
 import { parse } from 'partial-json';
