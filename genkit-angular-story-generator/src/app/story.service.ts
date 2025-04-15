@@ -25,11 +25,10 @@ export class StoryService {
   premiseInput = signal('');
   // Used to manage input the story generation requests
   storyInput = signal('');
-  // Only set this on the initial request
 
   // Only set this on the first request.
   // Note: this approach is for demonstration purposes. Consider alternative approaches to
-  // session management in an actual application.
+  // session management in a production application.
   sessionId = linkedSignal<string, string>({
     source: () => this.premiseResource.value().storyPremise,
     computation: (_agentResponse, previous) =>
