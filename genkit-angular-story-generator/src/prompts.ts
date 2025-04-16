@@ -56,7 +56,6 @@ Return a one sentence string containing the next queston. Do not be conversation
 
 Create some options to answer the question you just created asked. Return a
 comma separated list strings: ["example_1", "example_2", "example_3", "example_4", "example_5"].
-If it doesn't make sense to offer for options (e.g. character name), return an empty list: [].
 If your question asks if the user is satisifed with the story, return an empty list.
 
 The final response should be structured as follows:
