@@ -31,14 +31,13 @@ export class StoryService {
   // session management in a production application.
   sessionId = linkedSignal<string, string>({
     source: () => this.premiseResource.value().storyPremise,
-    computation: (_agentResponse, previous) =>
-      (!previous ? Date.now() + '' + Math.floor(Math.random() * 1000000000) : previous.value)
+    computation: (_newPremise, previous) => !previous ? randomId() : previous.value
   });
 
   // Used to determine whether to show the update story button in the UserInputComponenet
   hasPremiseUpdated = linkedSignal<string, boolean>({
     source: () => this.premiseResource.value().storyPremise,
-    computation: (newPremise, previous) => (previous || false) && newPremise !== previous!.source
+    computation: (newPremise, previous) => !!previous && newPremise !== previous!.source
   });
 
   // Only clear the session on initial page load
@@ -66,4 +65,8 @@ interface StoryPremise {
   storyPremise: string;
   nextQuestion: string;
   premiseOptions: string[];
+}
+
+function randomId(): string {
+  return Date.now() + '' + Math.floor(Math.random() * 1000000000);
 }
