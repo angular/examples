@@ -18,7 +18,7 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/platform-server": "^19.2.0",
     "@angular/router": "^19.2.0",
-    "@angular/ssr": "^19.2.0",
+    "@angular/ssr": "^19.2.16",
     "@google/genai": "^0.13.0",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
