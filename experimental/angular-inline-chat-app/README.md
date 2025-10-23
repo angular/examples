@@ -14,6 +14,9 @@ To start a local development server, run:
 
 ```bash
 ng serve
+
+# If exposing the dev server for testing integrations:
+ng serve --allowed-hosts
 ```
 
 This is enough to test the MCP server using manual tool calls. To test integrations with deployed

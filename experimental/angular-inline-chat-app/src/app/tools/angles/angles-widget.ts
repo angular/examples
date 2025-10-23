@@ -1,7 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import z from 'zod';
-import { AnglesWidget } from "./tools/angles/angles-widget";
 
 const DEFAULT_ANGLES = 3;
 
@@ -19,12 +18,12 @@ function getInitialAngles(location: Location): number {
 }
 
 @Component({
-  selector: 'app-root',
-  imports: [AnglesWidget],
-  templateUrl: './app.html',
-  styleUrl: './app.css',
+  selector: 'angles-widget',
+  imports: [],
+  templateUrl: './angles-widget.html',
+  styleUrl: './angles-widget.css',
 })
-export class App {
+export class AnglesWidget {
   private location = inject(Location);
 
   protected readonly angles = signal(getInitialAngles(this.location));

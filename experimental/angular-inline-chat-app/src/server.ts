@@ -4,19 +4,17 @@ import {
   isMainModule,
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
-import { AngularAppEngine } from '@angular/ssr';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express from 'express';
 import { join } from 'node:path';
-import { createUIResource, type CreateUIResourceOptions } from '@mcp-ui/server';
-import z from 'zod';
+
+import {registerAnglesTool} from './app/tools/angles/angles';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
-const mcpAngularApp = new AngularAppEngine();
 
 const mcpServer = new McpServer(
   {
@@ -28,103 +26,7 @@ const mcpServer = new McpServer(
   }
 );
 
-function registerWidgets() {
-  const name = 'angular-widget-0.0.1';
-  const uri = `ui://widget/angular.html`;
-
-  async function getResourceInfo(args: { angles?: number }): Promise<CreateUIResourceOptions> {
-    const res = await mcpAngularApp.handle(
-      new Request('http://ignored/?angles=' + (args.angles || 3))
-    );
-    if (!res?.ok) {
-      throw new Error(`Failed to load angular widget: ${res?.status} ${res?.statusText}`);
-    }
-    const resourceInfo: CreateUIResourceOptions = {
-      uri,
-      encoding: 'text',
-      content: {
-        type: 'rawHtml',
-        htmlString: await res.text(),
-      },
-    };
-    return resourceInfo;
-  }
-
-  const baseUrl = process.env['BASE_URL'] || 'http://localhost:4200';
-  const title = 'Artisinal Angles';
-  const description = 'A widget showing beautiful, artisinal angles.';
-  const invokingMessage = 'Angling...';
-  const invokedMessage = 'Angled!';
-  const resultMessage = 'Angles online.';
-  mcpServer.registerResource(name, uri, {}, async () => {
-    const resourceInfo: CreateUIResourceOptions = await getResourceInfo({});
-    return {
-      contents: [
-        createUIResource({
-          ...resourceInfo,
-          metadata: {
-            'openai/widgetDescription': description,
-            'openai/widgetCSP': {
-              connect_domains: [],
-              resource_domains: [baseUrl],
-            },
-            'openai/widgetPrefersBorder': true,
-          },
-          adapters: {
-            appsSdk: {
-              enabled: true,
-            },
-          },
-        }).resource,
-      ],
-    };
-  });
-  mcpServer.registerTool(
-    name,
-    {
-      title,
-      description,
-      _meta: {
-        'openai/widgetDomain': baseUrl,
-        'openai/outputTemplate': uri,
-        'openai/toolInvocation/invoking': invokingMessage,
-        'openai/toolInvocation/invoked': invokedMessage,
-        'openai/resultCanProduceWidget': true,
-        'openai/widgetAccessible': true,
-      },
-      inputSchema: {
-        angles: z
-          .number()
-          .min(3)
-          .max(40)
-          .optional()
-          .describe(
-            'Number of angles to display initially. For example, if the user says "show me 3 angles" set this to 3.'
-          ),
-      },
-      outputSchema: {
-        angles: z.number().min(3).max(40),
-      },
-    },
-    async (args) => {
-      const resourceInfo: CreateUIResourceOptions = await getResourceInfo(args);
-      return {
-        content: [
-          { type: 'text', text: resultMessage },
-          createUIResource({
-            ...resourceInfo,
-            uiMetadata: {
-              'initial-render-data': args,
-            },
-          }),
-        ],
-        structuredContent: args,
-      };
-    }
-  );
-}
-
-registerWidgets();
+registerAnglesTool(mcpServer);
 
 app.all('/mcp', express.json(), async (req, res) => {
   const transport = new StreamableHTTPServerTransport({
