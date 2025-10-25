@@ -8,15 +8,10 @@ import z from 'zod';
 import { AnglesWidget } from './angles-widget';
 
 import { config } from '../../app.config.server';
+import { mergeApplicationConfig } from '@angular/core';
+import { MCP_UI_INITITAL_RENDER_DATA } from '../mcp';
 
 export function registerAnglesTool(mcpServer: McpServer) {
-  const bootstrap = async (ctx: BootstrapContext) =>
-    bootstrapApplication(
-      AnglesWidget,
-      config,
-      ctx
-    );
-
   const name = 'angles-widget-0.0.2';
   const uri = `ui://angles-widget.html`;
 
@@ -26,8 +21,19 @@ export function registerAnglesTool(mcpServer: McpServer) {
   ): Promise<CreateUIResourceOptions> {
     const hostname = `${extra.requestInfo?.headers?.['host'] || 'localhost:4200'}`;
     let origin = hostname.startsWith('localhost:') ? `http://${hostname}` : `https://${hostname}`;
+    const angleCount = args.angles || 3;
+
+    const bootstrap = async (ctx: BootstrapContext) =>
+      bootstrapApplication(AnglesWidget, mergeApplicationConfig(config, {
+        providers: [
+          {
+            provide: MCP_UI_INITITAL_RENDER_DATA,
+            useValue: new Map<string, unknown>([['angles-widget', { angles: angleCount }]]),
+          }
+        ],
+      }), ctx);
     const res = await renderApplication(bootstrap, {
-      url: `${origin}/?angles=${(args.angles || 3)}`,
+      url: `${origin}`,
       document: `<body data-widget-id="angles-widget"><angles-widget></angles-widget><script type="module" src="${origin}/main.js"></script></body>`,
       platformProviders: [],
     });
@@ -49,6 +55,8 @@ export function registerAnglesTool(mcpServer: McpServer) {
   const invokedMessage = 'Shape shaped!';
   const resultMessage = 'Angles online.';
   mcpServer.registerResource(name, uri, {}, async (uri, extra) => {
+    const hostname = `${extra.requestInfo?.headers?.['host'] || 'localhost:4200'}`;
+    let baseUrl = hostname.startsWith('localhost:') ? `http://${hostname}` : `https://${hostname}`;
     const resourceInfo: CreateUIResourceOptions = await getResourceInfo({}, extra);
     return {
       contents: [
@@ -62,6 +70,7 @@ export function registerAnglesTool(mcpServer: McpServer) {
             },
             'openai/widgetPrefersBorder': true,
           },
+          // ChatGPT Apps will call the resource - make sure we include the adapater.
           adapters: {
             appsSdk: {
               enabled: true,

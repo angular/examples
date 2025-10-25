@@ -3,7 +3,8 @@
   gap: 32px;
   padding: 12px;
   align-items: center;
-  font-family: system-ui, sans-serif;
+  --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: var(--system-ui);
 
   --purple: rgb(172, 39, 251);
   --red: rgb(245, 1, 69);

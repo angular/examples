@@ -1,32 +1,46 @@
-import { Location } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, model } from '@angular/core';
 import z from 'zod';
+import { injectRenderDataForWidget } from '../mcp';
 
 const DEFAULT_ANGLES = 3;
 
-function getInitialAngles(location: Location): number {
-  const qs = new URLSearchParams(location.path().split('?')[1] || '');
-  const anglesStr = qs.get('angles');
-  if (anglesStr) {
-    const parsed = z.number().min(3).max(40).safeParse(Number(anglesStr));
-    if (parsed.success) {
-      return parsed.data;
-    }
-    console.warn('Invalid angles query param, using default of 3: %o', parsed.error);
-  }
-  return DEFAULT_ANGLES;
+const renderDataSchema = z.object({
+  angles: z.number().min(3).max(40),
+});
+
+interface OpenAiWidgetInterface {
+  setWidgetState: (state: unknown) => Promise<void>;
 }
+
+declare var openai: OpenAiWidgetInterface | undefined;
 
 @Component({
   selector: 'angles-widget',
-  imports: [],
   templateUrl: './angles-widget.html',
   styleUrl: './angles-widget.css',
 })
 export class AnglesWidget {
-  private location = inject(Location);
+  private readonly renderData = injectRenderDataForWidget('angles-widget', renderDataSchema);
 
-  protected readonly angles = signal(getInitialAngles(this.location));
+  readonly angles = model(this.renderData?.angles ?? DEFAULT_ANGLES);
+
+  constructor() {
+    this.syncAnglesToRenderData();
+  }
+
+  private syncAnglesToRenderData() {
+    if (typeof window === 'undefined' || typeof openai === 'undefined' || !openai) {
+      return;
+    }
+
+    const widgetInterface = openai;
+
+    // TODO: Check if we're embedded in an MCP UI context.
+    effect(() => {
+      const angles = this.angles();
+      widgetInterface.setWidgetState({ angles });
+    });
+  }
 
   protected readonly shape = computed(() => {
     const angleCount = this.angles();

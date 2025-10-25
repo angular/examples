@@ -7,6 +7,7 @@ The meat of the MCP integration is in `src/server.ts`. It uses the following pac
 
 * `@modelcontextprotocol/sdk`: To expose an MCP endpoint on Angular's server.
 * `@mcp-ui/server`: To provide MCP-UI tools & resources on the MCP endpoint.
+* `@mcp-ui/client`: To test the app's MCP-UI widget.
 
 ## Development setup
 
@@ -16,7 +17,7 @@ To start a local development server, run:
 ng serve
 
 # If exposing the dev server for testing integrations:
-ng serve --allowed-hosts
+BASE_URL=https://YOUR-PUBLIC-PROXY-DOMAIN ng serve --allowed-hosts
 ```
 
 This is enough to test the MCP server using manual tool calls. To test integrations with deployed

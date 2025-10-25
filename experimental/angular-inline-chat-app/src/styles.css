@@ -1,1 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: var(--system-ui);
+}

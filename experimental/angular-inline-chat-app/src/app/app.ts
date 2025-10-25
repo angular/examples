@@ -1,57 +1,48 @@
-import { Location } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
-import z from 'zod';
-import { AnglesWidget } from "./tools/angles/angles-widget";
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  inject,
+  resource,
+  signal
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Resource } from '@modelcontextprotocol/sdk/types.js';
 
-const DEFAULT_ANGLES = 3;
+import { AnglesWidget } from './tools/angles/angles-widget';
+import { MCP_CLIENT } from './tools/mcp';
 
-function getInitialAngles(location: Location): number {
-  const qs = new URLSearchParams(location.path().split('?')[1] || '');
-  const anglesStr = qs.get('angles');
-  if (anglesStr) {
-    const parsed = z.number().min(3).max(40).safeParse(Number(anglesStr));
-    if (parsed.success) {
-      return parsed.data;
-    }
-    console.warn('Invalid angles query param, using default of 3: %o', parsed.error);
-  }
-  return DEFAULT_ANGLES;
-}
+type ToolResponse = Array<{ type: 'text' } | { type: 'resource'; resource: Resource }>;
 
 @Component({
   selector: 'app-root',
-  imports: [AnglesWidget],
+  imports: [AnglesWidget, FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class App {
-  private location = inject(Location);
+  private readonly mcpClient = inject(MCP_CLIENT);
 
-  protected readonly angles = signal(getInitialAngles(this.location));
+  protected readonly directAngles = signal(4);
+  protected readonly mcpUiAngles = signal(5);
 
-  protected readonly shape = computed(() => {
-    const angleCount = this.angles();
-    if (angleCount < 3) {
-      return '';
-    }
-    const angleStep = (2 * Math.PI) / angleCount;
-    let path = '';
-    for (let i = 0; i < angleCount; i++) {
-      const angle = i * angleStep - Math.PI / 2; // Start at the top
-      const x = 52 + 40 * Math.cos(angle);
-      const y = 52 + 40 * Math.sin(angle);
-      const coord = `${x.toFixed(2)} ${y.toFixed(2)}`;
-      if (i === 0) {
-        path = `M ${coord} L`; // Move to the first point
-      } else {
-        path += ` ${coord}`;
+  protected readonly uiResource = resource({
+    loader: async () => {
+      if (typeof location === 'undefined') {
+        return null;
       }
-    }
-    path += ' Z'; // Close the shape
-    return path;
+      const widget = await this.mcpClient.callTool({
+        name: 'angles-widget-0.0.2',
+        // These are the _initial_ angles, we don't want to refetch the resource
+        // whenever the value changes.
+        arguments: { angles: this.mcpUiAngles() },
+      });
+      const { resource } = (widget.content as ToolResponse).find((c) => c.type === 'resource')!;
+      return resource;
+    },
   });
 
-  increaseAngles() {
-    this.angles.update((n) => Math.min(n + 1, 40));
+  protected handleUIAction(event: any) {
+    console.log('UI Action received:', event);
   }
 }
