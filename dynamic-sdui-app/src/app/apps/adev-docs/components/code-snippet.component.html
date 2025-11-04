@@ -1,0 +1,21 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+-->
+@if (code() && language()) {
+  <div class="code-snippet-container">
+    <pre><code [highlight]="code()!" [language]="language()!"></code></pre>
+    <button class="copy-button" (click)="copyCode()">
+      <mat-icon>content_copy</mat-icon>
+    </button>
+  </div>
+} @else {
+  <div class="code-snippet-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+}

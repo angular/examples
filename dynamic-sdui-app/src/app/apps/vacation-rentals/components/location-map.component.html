@@ -1,0 +1,15 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+-->
+<div class="container">
+  <div class="map-wrapper">
+    <img [src]="mapImageUrl()" alt="Approximate location of the property" fill priority>
+  </div>
+  <p class="location-description">{{ locationDescription() }}</p>
+</div>

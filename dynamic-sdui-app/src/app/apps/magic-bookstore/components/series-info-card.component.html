@@ -1,0 +1,18 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+-->
+@if (series(); as series) {
+  <div class="series-card">
+    <mat-icon class="series-icon">collections_bookmark</mat-icon>
+    <div class="series-details">
+      <span class="series-name">{{ series.name }}</span>
+      <span class="series-number">Book {{ series.number }}</span>
+    </div>
+  </div>
+}

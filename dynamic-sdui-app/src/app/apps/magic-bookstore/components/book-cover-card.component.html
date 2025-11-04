@@ -1,0 +1,42 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+-->
+@if (book(); as book) {
+  <div class="book-card" (click)="viewDetails(book.title)">
+    <div class="cover-container">
+      @if (book.coverImgUrl) {
+        <img [src]="book.coverImgUrl" alt="Cover of {{ book.title }}" class="book-cover">
+      } @else {
+        <mat-spinner diameter="50"></mat-spinner>
+      }
+      @if (book.bestsellerRank) {
+        <app-bestseller-ribbon [rank]="book.bestsellerRank"></app-bestseller-ribbon>
+      }
+    </div>
+    <div class="book-info">
+      <h3 class="book-title">{{ book.title }}</h3>
+      @if (book.authors && book.authors.length > 0) {
+        <p class="book-author">{{ book.authors[0].name }}</p>
+      }
+      <div class="rating-price-container">
+        @if (book.averageRating) {
+          <app-rating-stars [rating]="book.averageRating"></app-rating-stars>
+        }
+        <div class="price-container">
+          @if (book.salePrice) {
+            <span class="original-price">{{ book.price | currency:'USD':'symbol':'1.2-2' }}</span>
+            <span class="sale-price">{{ book.salePrice | currency:'USD':'symbol':'1.2-2' }}</span>
+          } @else {
+            <span class="price">{{ book.price | currency:'USD':'symbol':'1.2-2' }}</span>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}

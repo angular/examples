@@ -1,0 +1,23 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+.star-rating {
+  display: flex;
+  align-items: center;
+  color: var(--accent-gold); /* Gold color for stars */
+}
+
+.star-icon {
+  font-size: var(--text-lg); /* Adjust size as needed */
+  width: var(--text-lg);
+  height: var(--text-lg);
+  color: var(--text-muted); /* Default for empty stars */
+}
+
+.star-icon.filled, .star-icon.half-filled {
+  color: var(--accent-gold);
+}

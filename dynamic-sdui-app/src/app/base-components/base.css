@@ -1,0 +1,80 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+:host {
+    display: block;
+}
+
+.toggle-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    background: var(--surface);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-medium);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-family: var(--font-family);
+}
+
+.toggle-container button {
+    font-family: var(--font-family);
+    font-size: var(--text-sm);
+    padding: var(--spacing-1) var(--spacing-2);
+    border: var(--border-default);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+}
+
+.ai-mode-scaffold {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100dvh;
+}
+
+.app-header {
+    background-color: var(--surface);
+    padding: var(--spacing-3);
+    border-bottom: var(--border-default);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.app-header h1 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--primary);
+    margin: 0;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.header-button {
+    font-family: var(--font-family);
+    font-size: var(--text-sm);
+    padding: var(--spacing-1) var(--spacing-2);
+    border: var(--border-default);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    background-color: var(--surface);
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    overflow: hidden; /* Prevent scrolling on the grid container */
+    min-height: 0;
+}
+
+.ai-content {
+    overflow-y: auto; /* Allow scrolling on the AI content area */
+    padding: var(--spacing-4);
+}

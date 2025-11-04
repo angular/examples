@@ -1,0 +1,48 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+
+/* 
+  RATIONALE: This component should be a compact, inline element that aligns
+  cleanly with adjacent text. The use of flexbox ensures the stars and the
+  optional review count are perfectly aligned.
+*/
+.rating-container {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--haven-spacing-2, 8px); /* Gap between stars and review count */
+  font-family: var(--haven-font-family, sans-serif);
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  color: var(--haven-color-accent-gold, #FFB400);
+}
+
+.star {
+  /* 
+    RATIONALE: Using font-size to control icon size is a modern, accessible
+    practice that ensures icons scale with user's text size preferences.
+  */
+  font-size: var(--haven-text-lg, 18px);
+  /* Prevents the user from selecting the icon text */
+  user-select: none; 
+}
+
+.review-count {
+  font-size: var(--haven-text-sm, 14px);
+  color: var(--haven-color-text-muted, #888888);
+  /* Nudge the count down slightly for better visual alignment with stars */
+  transform: translateY(1px);
+}
+
+/* 
+  NOTE: Assumes Material Icons are available in the project.
+  A link should be added to the main index.html if not already present:
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+*/

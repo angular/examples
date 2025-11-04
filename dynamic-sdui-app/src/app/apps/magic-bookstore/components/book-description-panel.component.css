@@ -1,0 +1,46 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+.description-panel {
+  background-color: var(--surface);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-subtle);
+  padding: var(--spacing-5);
+  border: var(--border-default);
+}
+
+.panel-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-4);
+  border-bottom: var(--border-default);
+  padding-bottom: var(--spacing-2);
+}
+
+.book-description {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  line-height: var(--line-height-body);
+  margin-bottom: var(--spacing-3);
+}
+
+.read-more-button {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  padding: 0;
+  transition: var(--transition-default);
+}
+
+.read-more-button:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}

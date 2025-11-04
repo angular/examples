@@ -1,0 +1,19 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+-->
+@if (review(); as review) {
+  <div class="review-card">
+    <div class="review-header">
+      <h4 class="username">{{ review.username }}</h4>
+      <app-rating-stars [rating]="review.rating"></app-rating-stars>
+    </div>
+    <p class="comment">{{ review.comment }}</p>
+    <p class="timestamp">{{ review.timestamp | date:'medium' }}</p>
+  </div>
+}

@@ -1,0 +1,32 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+-->
+<div class="property-card" (click)="viewDetail()">
+    @if (imgUrl()) {
+    <div class="image-wrapper">
+      <img [src]="imgUrl()" [alt]="title()" priority fill class="property-image">
+    </div>
+  }
+  <div class="card-content">
+    @if (location()) {
+      <h3 class="location">{{ location() }}</h3>
+    }
+    @if (rating() && reviewCount()) {
+      <app-rating-stars [rating]="rating()" [reviewCount]="reviewCount()" />
+    }
+    @if (title()) {
+      <p class="title">{{ title() }}</p>
+    }
+    @if (pricePerNight()) {
+      <p class="price">
+        <strong>${{ pricePerNight() }}</strong> night
+      </p>
+    }
+  </div>
+</div>

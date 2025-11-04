@@ -1,0 +1,33 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+.full-code-example-card {
+  position: relative;
+  background-color: var(--adev-docs-surface);
+  border: 1px solid var(--adev-docs-border);
+  border-radius: var(--adev-docs-border-radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--adev-docs-shadow);
+  color: var(--adev-docs-text);
+}
+
+.example-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--adev-docs-primary);
+  margin-bottom: 0.8rem;
+}
+
+.example-description {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1.2rem;
+  color: var(--adev-docs-text-secondary);
+}
+
+/* CodeSnippetComponent styles are inherited/used via the component itself */

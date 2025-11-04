@@ -1,0 +1,50 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+-->
+@if (book(); as book) {
+  <div class="hero-section">
+    <div class="cover-image-container">
+      @if (book.coverImgUrl) {
+        <img [src]="book.coverImgUrl" alt="Cover of {{ book.title }}" class="book-cover-hero">
+      } @else {
+        <mat-spinner diameter="70"></mat-spinner>
+      }
+    </div>
+    <div class="details-container">
+      <h1 class="book-title">{{ book.title }}</h1>
+      @if (book.subtitle) {
+        <h2 class="book-subtitle">{{ book.subtitle }}</h2>
+      }
+      @if (authorNames()) {
+        <p class="authors">by {{ authorNames() }}</p>
+      }
+      <div class="rating-publisher-info">
+        @if (book.averageRating) {
+          <app-rating-stars [rating]="book.averageRating"></app-rating-stars>
+        }
+        @if (book.publisher) {
+          <span class="publisher-info">
+            Published by {{ book.publisher.name }} on {{ book.publicationDate | date:'longDate' }}
+          </span>
+        }
+      </div>
+      <div class="price-action-container">
+        <div class="price-display">
+          @if (book.salePrice) {
+            <span class="original-price">{{ book.price | currency:'USD':'symbol':'1.2-2' }}</span>
+            <span class="sale-price">{{ book.salePrice | currency:'USD':'symbol':'1.2-2' }}</span>
+          } @else {
+            <span class="price">{{ book.price | currency:'USD':'symbol':'1.2-2' }}</span>
+          }
+        </div>
+        <button class="add-to-cart-button" (click)="addToCart()">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+}

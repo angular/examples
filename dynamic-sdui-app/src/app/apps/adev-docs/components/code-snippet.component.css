@@ -1,0 +1,43 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+.code-snippet-container {
+  position: relative;
+}
+
+.copy-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: transparent;
+  border: none;
+  color: var(--adev-docs-text-secondary);
+  cursor: pointer;
+}
+
+.copy-button:hover {
+  color: var(--adev-docs-text-primary);
+}
+
+.code-snippet {
+  background-color: var(--adev-docs-code-background);
+  padding: 1em;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+.code-snippet code {
+  color: var(--adev-docs-code-text);
+}
+
+code {
+  border: var(--adev-docs-border-default);
+  border-radius: var(--adev-docs-border-radius-md);
+}

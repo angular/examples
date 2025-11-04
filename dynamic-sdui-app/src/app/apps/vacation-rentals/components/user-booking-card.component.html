@@ -1,0 +1,35 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+-->
+@if (booking(); as bookingData) {
+  <div class="card-container" [class]="bookingData.status.toLowerCase()">
+    <div class="image-wrapper">
+      <img [src]="bookingData.property.imageUrl" [alt]="bookingData.property.name" fill>
+    </div>
+    <div class="content-wrapper">
+      <div class="property-info">
+        <h3 class="property-name">{{ bookingData.property.name }}</h3>
+        <div class="status-badge">{{ bookingData.status }}</div>
+      </div>
+      <div class="trip-info">
+        <div class="date-item">
+          <span class="label">Check-in</span>
+          <span class="value">{{ bookingData.checkInDate }}</span>
+        </div>
+        <div class="date-item">
+          <span class="label">Checkout</span>
+          <span class="value">{{ bookingData.checkOutDate }}</span>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="action-button">View Itinerary</button>
+      </div>
+    </div>
+  </div>
+}

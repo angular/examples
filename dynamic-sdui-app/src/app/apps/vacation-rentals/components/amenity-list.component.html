@@ -1,0 +1,31 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+-->
+<div class="list-container">
+  <div class="amenity-grid">
+    @for (amenity of visibleAmenities(); track amenity.name) {
+      <div class="amenity-item">
+        @if (amenity.icon && amenity.name) {
+          <div class="material-icons">{{ amenity.icon }}</div>
+          <div>{{ amenity.name.trim() }}</div>
+        }
+      </div>
+    }
+  </div>
+
+  @if (hiddenAmenitiesCount() > 0) {
+    <button class="show-all-button" (click)="toggleVisibility()">
+      Show all {{ amenities().length }} amenities
+    </button>
+  } @else if (showAll()) {
+    <button class="show-all-button" (click)="toggleVisibility()">
+      Show less
+    </button>
+  }
+</div>

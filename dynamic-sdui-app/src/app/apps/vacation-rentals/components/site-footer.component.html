@@ -1,0 +1,38 @@
+<!--
+ *!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ *
+-->
+<footer class="footer-container">
+  <div class="main-content">
+    <div class="link-columns">
+      @for (column of linkColumns(); track column.title) {
+        <div class="link-column">
+          <h3>{{ column.title }}</h3>
+          <ul>
+            @for (link of column.links; track link.text) {
+              <li><a [href]="link.url">{{ link.text }}</a></li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="bottom-bar">
+    <p class="copyright">&copy; {{ 2025 }} Haven. All rights reserved.</p>
+    @if (socialLinks(); as socials) {
+      <div class="social-links">
+        @for (social of socials; track social.platform) {
+          <a [href]="social.url" [title]="social.platform">
+            <!-- This is a simple way to show icons; a real app might use an SVG icon system -->
+            <img [src]="'https://' + social.platform + '.com/favicon.ico'" [alt]="social.platform" width="20" height="20">
+          </a>
+        }
+      </div>
+    }
+  </div>
+</footer>

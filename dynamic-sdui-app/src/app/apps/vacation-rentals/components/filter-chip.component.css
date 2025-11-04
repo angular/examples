@@ -1,0 +1,48 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+
+/*
+  RATIONALE: Filter chips must be easily tappable and provide clear visual feedback
+  on their state (selected/unselected). The host bindings in the component.ts file
+  drive the primary styling logic.
+*/
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--haven-spacing-2, 8px);
+  font-family: var(--haven-font-family, sans-serif);
+  font-size: var(--haven-text-sm, 14px);
+  font-weight: var(--haven-font-weight-medium, 500);
+  padding: var(--haven-spacing-2, 8px) var(--haven-spacing-3, 16px);
+  border-radius: 9999px; /* Creates the "pill" shape */
+  border: var(--haven-border-default, 1px solid #EAEAEA);
+  background-color: var(--haven-color-surface, #FFFFFF);
+  color: var(--haven-color-text-secondary, #555555);
+  cursor: pointer;
+  user-select: none;
+  transition: var(--haven-transition-default, all 0.2s ease-in-out);
+}
+
+:host(:hover) {
+  border-color: var(--haven-color-text-primary, #222222);
+  color: var(--haven-color-text-primary, #222222);
+}
+
+/*
+  RATIONALE: The .selected class provides a strong visual indicator. The background
+  becomes dark, and the text becomes light, making it obvious which filters are active.
+*/
+:host.selected {
+  background-color: var(--haven-color-text-primary, #222222);
+  color: var(--haven-color-surface, #FFFFFF);
+  border-color: var(--haven-color-text-primary, #222222);
+}
+
+.material-icons {
+  font-size: 18px;
+}

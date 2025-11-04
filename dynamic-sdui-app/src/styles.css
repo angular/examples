@@ -1,0 +1,348 @@
+/*!
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.dev/license
+ */
+@import "tailwindcss";
+@import "highlight.js/styles/atom-one-dark.css";
+
+/* You can add global styles to this file, and also import other style files */
+:root {
+    /* Haven Theme Variables */
+    --haven-primary: #007A7A;
+    --haven-primary-light: #E6F2F2;
+    --haven-primary-dark: #005C5C;
+    --haven-text-primary: #222222;
+    --haven-text-secondary: #555555;
+    --haven-text-muted: #888888;
+    --haven-background: #F9F9F9;
+    --haven-surface: #FFFFFF;
+    --haven-border: #EAEAEA;
+    --haven-accent-gold: #FFB400;
+    --haven-success: #28a745;
+    --haven-warning: #ffc107;
+    --haven-error: #dc3545;
+    --haven-font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --haven-text-xs: 0.75rem;
+    --haven-text-sm: 0.875rem;
+    --haven-text-base: 1rem;
+    --haven-text-lg: 1.125rem;
+    --haven-text-xl: 1.5rem;
+    --haven-text-xxl: 2rem;
+    --haven-font-weight-regular: 400;
+    --haven-font-weight-medium: 500;
+    --haven-font-weight-semibold: 600;
+    --haven-line-height-body: 1.6;
+    --haven-line-height-heading: 1.2;
+    --haven-spacing-1: 0.25rem;
+    --haven-spacing-2: 0.5rem;
+    --haven-spacing-3: 1rem;
+    --haven-spacing-4: 1.5rem;
+    --haven-spacing-5: 2rem;
+    --haven-spacing-6: 3rem;
+    --haven-border-radius-md: 8px;
+    --haven-border-radius-lg: 12px;
+    --haven-border-width: 1px;
+    --haven-border-default: var(--haven-border-width) solid var(--haven-border);
+    --haven-shadow-subtle: 0px 4px 12px rgba(0, 0, 0, 0.05);
+    --haven-shadow-medium: 0px 6px 16px rgba(0, 0, 0, 0.08);
+    --haven-shadow-focus: 0 0 0 3px rgba(0, 122, 122, 0.25);
+    --haven-transition-default: all 0.2s ease-in-out;
+
+    /* adev-docs Theme Variables */
+    --adev-docs-primary: #5C44E4;
+    --adev-docs-primary-light: #E4E0FA;
+    --adev-docs-primary-dark: #8514F5;
+    --adev-docs-secondary: #6c757d;
+    --adev-docs-background: #ffffff;
+    --adev-docs-surface: #f8f9fa;
+    --adev-docs-text-primary: #212529;
+    --adev-docs-text-secondary: #555555;
+    --adev-docs-text-muted: #888888;
+    --adev-docs-border: #dee2e6;
+    --adev-docs-code-background: #e9ecef;
+    --adev-docs-code-text: #0d0d0d;
+    --adev-docs-border-radius-md: 4px;
+    --adev-docs-border-radius-lg: 8px;
+    --adev-docs-shadow-subtle: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --adev-docs-shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --adev-docs-shadow-focus: 0 0 0 3px rgba(92, 68, 228, 0.25);
+    --adev-docs-success: #28a745;
+    --adev-docs-info: #F637E3;
+    --adev-docs-warning: #ffc107;
+    --adev-docs-danger: #F11653;
+    --adev-docs-font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --adev-docs-text-xs: 0.75rem;
+    --adev-docs-text-sm: 0.875rem;
+    --adev-docs-text-base: 1rem;
+    --adev-docs-text-lg: 1.125rem;
+    --adev-docs-text-xl: 1.5rem;
+    --adev-docs-text-xxl: 2rem;
+    --adev-docs-font-weight-regular: 400;
+    --adev-docs-font-weight-medium: 500;
+    --adev-docs-font-weight-semibold: 600;
+    --adev-docs-line-height-body: 1.6;
+    --adev-docs-line-height-heading: 1.2;
+    --adev-docs-spacing-1: 0.25rem;
+    --adev-docs-spacing-2: 0.5rem;
+    --adev-docs-spacing-3: 1rem;
+    --adev-docs-spacing-4: 1.5rem;
+    --adev-docs-spacing-5: 2rem;
+    --adev-docs-spacing-6: 3rem;
+    --adev-docs-border-width: 1px;
+    --adev-docs-border-default: var(--adev-docs-border-width) solid var(--adev-docs-border);
+    --adev-docs-transition-default: all 0.2s ease-in-out;
+}
+
+/* magic-bookstore Theme Variables */
+:root {
+    --magic-bookstore-primary: #4A90E2; /* A calming blue */
+    --magic-bookstore-primary-light: #EAF3FD;
+    --magic-bookstore-primary-dark: #2F6BBF;
+    --magic-bookstore-text-primary: #333333;
+    --magic-bookstore-text-secondary: #555555;
+    --magic-bookstore-text-muted: #888888;
+    --magic-bookstore-background: #F8F8FA;
+    --magic-bookstore-surface: #FFFFFF;
+    --magic-bookstore-border: #E0E0E0;
+    --magic-bookstore-accent-gold: #FFD700; /* For awards/highlights */
+    --magic-bookstore-success: #4CAF50;
+    --magic-bookstore-warning: #FFC107;
+    --magic-bookstore-error: #F44336;
+    --magic-bookstore-font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --magic-bookstore-text-xs: 0.75rem;
+    --magic-bookstore-text-sm: 0.875rem;
+    --magic-bookstore-text-base: 1rem;
+    --magic-bookstore-text-lg: 1.125rem;
+    --magic-bookstore-text-xl: 1.5rem;
+    --magic-bookstore-text-xxl: 2rem;
+    --magic-bookstore-font-weight-regular: 400;
+    --magic-bookstore-font-weight-medium: 500;
+    --magic-bookstore-font-weight-semibold: 600;
+    --magic-bookstore-line-height-body: 1.6;
+    --magic-bookstore-line-height-heading: 1.2;
+    --magic-bookstore-spacing-1: 0.25rem;
+    --magic-bookstore-spacing-2: 0.5rem;
+    --magic-bookstore-spacing-3: 1rem;
+    --magic-bookstore-spacing-4: 1.5rem;
+    --magic-bookstore-spacing-5: 2rem;
+    --magic-bookstore-spacing-6: 3rem;
+    --magic-bookstore-border-radius-md: 8px;
+    --magic-bookstore-border-radius-lg: 12px;
+    --magic-bookstore-border-width: 1px;
+    --magic-bookstore-border-default: var(--magic-bookstore-border-width) solid var(--magic-bookstore-border);
+    --magic-bookstore-shadow-subtle: 0px 4px 12px rgba(0, 0, 0, 0.05);
+    --magic-bookstore-shadow-medium: 0px 6px 16px rgba(0, 0, 0, 0.08);
+    --magic-bookstore-shadow-focus: 0 0 0 3px rgba(74, 144, 226, 0.25);
+    --magic-bookstore-transition-default: all 0.2s ease-in-out;
+}
+
+.magic-bookstore-theme {
+    --primary: var(--magic-bookstore-primary);
+    --primary-light: var(--magic-bookstore-primary-light);
+    --primary-dark: var(--magic-bookstore-primary-dark);
+    --text-primary: var(--magic-bookstore-text-primary);
+    --text-secondary: var(--magic-bookstore-text-secondary);
+    --text-muted: var(--magic-bookstore-text-muted);
+    --background: var(--magic-bookstore-background);
+    --surface: var(--magic-bookstore-surface);
+    --border: var(--magic-bookstore-border);
+    --accent-gold: var(--magic-bookstore-accent-gold);
+    --success: var(--magic-bookstore-success);
+    --warning: var(--magic-bookstore-warning);
+    --error: var(--magic-bookstore-error);
+    --font-family: var(--magic-bookstore-font-family);
+    --text-xs: var(--magic-bookstore-text-xs);
+    --text-sm: var(--magic-bookstore-text-sm);
+    --text-base: var(--magic-bookstore-text-base);
+    --text-lg: var(--magic-bookstore-text-lg);
+    --text-xl: var(--magic-bookstore-text-xl);
+    --text-xxl: var(--magic-bookstore-text-xxl);
+    --font-weight-regular: var(--magic-bookstore-font-weight-regular);
+    --font-weight-medium: var(--magic-bookstore-font-weight-medium);
+    --font-weight-semibold: var(--magic-bookstore-font-weight-semibold);
+    --line-height-body: var(--magic-bookstore-line-height-body);
+    --line-height-heading: var(--magic-bookstore-line-height-heading);
+    --spacing-1: var(--magic-bookstore-spacing-1);
+    --spacing-2: var(--magic-bookstore-spacing-2);
+    --spacing-3: var(--magic-bookstore-spacing-3);
+    --spacing-4: var(--magic-bookstore-spacing-4);
+    --spacing-5: var(--magic-bookstore-spacing-5);
+    --spacing-6: var(--magic-bookstore-spacing-6);
+    --border-radius-md: var(--magic-bookstore-border-radius-md);
+    --border-radius-lg: var(--magic-bookstore-border-radius-lg);
+    --border-width: var(--magic-bookstore-border-width);
+    --border-default: var(--magic-bookstore-border-default);
+    --shadow-subtle: var(--magic-bookstore-shadow-subtle);
+    --shadow-medium: var(--magic-bookstore-shadow-medium);
+    --shadow-focus: var(--magic-bookstore-shadow-focus);
+    --transition-default: var(--magic-bookstore-transition-default);
+}
+
+.haven-theme {
+    --primary: var(--haven-primary);
+    --primary-light: var(--haven-primary-light);
+    --primary-dark: var(--haven-primary-dark);
+    --text-primary: var(--haven-text-primary);
+    --text-secondary: var(--haven-text-secondary);
+    --text-muted: var(--haven-text-muted);
+    --background: var(--haven-background);
+    --surface: var(--haven-surface);
+    --border: var(--haven-border);
+    --accent-gold: var(--haven-accent-gold);
+    --success: var(--haven-success);
+    --warning: var(--haven-warning);
+    --error: var(--haven-error);
+    --font-family: var(--haven-font-family);
+    --text-xs: var(--haven-text-xs);
+    --text-sm: var(--haven-text-sm);
+    --text-base: var(--haven-text-base);
+    --text-lg: var(--haven-text-lg);
+    --text-xl: var(--haven-text-xl);
+    --text-xxl: var(--haven-text-xxl);
+    --font-weight-regular: var(--haven-font-weight-regular);
+    --font-weight-medium: var(--haven-font-weight-medium);
+    --font-weight-semibold: var(--haven-font-weight-semibold);
+    --line-height-body: var(--haven-line-height-body);
+    --line-height-heading: var(--haven-line-height-heading);
+    --spacing-1: var(--haven-spacing-1);
+    --spacing-2: var(--haven-spacing-2);
+    --spacing-3: var(--haven-spacing-3);
+    --spacing-4: var(--haven-spacing-4);
+    --spacing-5: var(--haven-spacing-5);
+    --spacing-6: var(--haven-spacing-6);
+    --border-radius-md: var(--haven-border-radius-md);
+    --border-radius-lg: var(--haven-border-radius-lg);
+    --border-width: var(--haven-border-width);
+    --border-default: var(--haven-border-default);
+    --shadow-subtle: var(--haven-shadow-subtle);
+    --shadow-medium: var(--haven-shadow-medium);
+    --shadow-focus: var(--haven-shadow-focus);
+    --transition-default: var(--haven-transition-default);
+}
+
+.adev-docs-theme {
+    --primary: var(--adev-docs-primary);
+    --primary-light: var(--adev-docs-primary-light);
+    --primary-dark: var(--adev-docs-primary-dark);
+    --secondary: var(--adev-docs-secondary);
+    --background: var(--adev-docs-background);
+    --surface: var(--adev-docs-surface);
+    --text-primary: var(--adev-docs-text-primary);
+    --text-secondary: var(--adev-docs-text-secondary);
+    --text-muted: var(--adev-docs-text-muted);
+    --border: var(--adev-docs-border);
+    --code-background: var(--adev-docs-code-background);
+    --code-text: var(--adev-docs-code-text);
+    --border-radius-md: var(--adev-docs-border-radius-md);
+    --border-radius-lg: var(--adev-docs-border-radius-lg);
+    --shadow-subtle: var(--adev-docs-shadow-subtle);
+    --shadow-medium: var(--adev-docs-shadow-medium);
+    --shadow-focus: var(--adev-docs-shadow-focus);
+    --success: var(--adev-docs-success);
+    --info: var(--adev-docs-info);
+    --warning: var(--adev-docs-warning);
+    --danger: var(--adev-docs-danger);
+    --font-family: var(--adev-docs-font-family);
+    --text-xs: var(--adev-docs-text-xs);
+    --text-sm: var(--adev-docs-text-sm);
+    --text-base: var(--adev-docs-text-base);
+    --text-lg: var(--adev-docs-text-lg);
+    --text-xl: var(--adev-docs-text-xl);
+    --text-xxl: var(--adev-docs-text-xxl);
+    --font-weight-regular: var(--adev-docs-font-weight-regular);
+    --font-weight-medium: var(--adev-docs-font-weight-medium);
+    --font-weight-semibold: var(--adev-docs-font-weight-semibold);
+    --line-height-body: var(--adev-docs-line-height-body);
+    --line-height-heading: var(--adev-docs-line-height-heading);
+    --spacing-1: var(--adev-docs-spacing-1);
+    --spacing-2: var(--adev-docs-spacing-2);
+    --spacing-3: var(--adev-docs-spacing-3);
+    --spacing-4: var(--adev-docs-spacing-4);
+    --spacing-5: var(--adev-docs-spacing-5);
+    --spacing-6: var(--adev-docs-spacing-6);
+    --border-width: var(--adev-docs-border-width);
+    --border-default: var(--adev-docs-border-default);
+    --transition-default: all 0.2s ease-in-out;
+}
+
+body {
+    font-family: var(--adev-docs-font-family);
+    color: var(--adev-docs-text-primary);
+    background-color: var(--adev-docs-background);
+    line-height: var(--adev-docs-line-height-body);
+}
+
+h1 {
+    font-size: var(--adev-docs-text-xxl);
+    font-weight: var(--adev-docs-font-weight-semibold);
+    margin-bottom: var(--adev-docs-spacing-4);
+}
+
+h2 {
+    font-size: var(--adev-docs-text-xl);
+    font-weight: var(--adev-docs-font-weight-semibold);
+    margin-bottom: var(--adev-docs-spacing-3);
+}
+
+.concept-explanation ul {
+  list-style: disc inside;
+}
+
+.concept-explanation ol {
+  list-style: decimal inside;
+}
+
+.concept-explanation ul,
+.concept-explanation ol {
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+}
+
+.concept-explanation li {
+
+  margin-bottom: 0.5em;
+
+}
+
+
+
+/* Added styles for inline code snippets */
+
+code {
+
+  background-color: var(--adev-docs-code-background, #f5f5f5);
+
+  border-radius: var(--adev-docs-border-radius-md, 4px);
+
+  padding: 2px 4px;
+
+  font-family: "Courier New", Courier, monospace;
+
+  font-size: 0.9em;
+
+  color: var(--adev-docs-code-text, #333);
+
+}
+
+
+
+/* Reset styles for code blocks to avoid conflicts with highlight.js */
+
+pre code {
+
+  background-color: transparent;
+
+  border-radius: 0;
+
+  padding: 0;
+
+  font-family: inherit;
+
+  font-size: inherit;
+
+  color: inherit;
+
+}
