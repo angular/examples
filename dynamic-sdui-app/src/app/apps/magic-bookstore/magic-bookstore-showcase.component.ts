@@ -9,7 +9,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Book, Author, Review, Award, DATA } from './data-store';
+import { Book, DATA } from './data-store';
 
 // Import all generated components
 import { BookCoverCardComponent } from './components/book-cover-card.component';

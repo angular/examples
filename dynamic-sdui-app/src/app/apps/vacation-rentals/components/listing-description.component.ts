@@ -35,6 +35,7 @@ const MAX_VISIBLE_LINES = 3;
   display: block;
   font-family: var(--haven-font-family, sans-serif);
   padding: var(--haven-spacing-5, 32px) 0;
+  padding-right: var(--haven-spacing-5, 32px);
   border-bottom: var(--haven-border-default, 1px solid #EAEAEA);
 }
 
