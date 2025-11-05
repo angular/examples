@@ -15,7 +15,14 @@ import { FormatInlineCodePipe } from '../../../pipes/format-inline-code.pipe';
   selector: 'app-topic-card',
   standalone: true,
   imports: [CommonModule, FormatInlineCodePipe],
-  templateUrl: './topic-card.component.html',
+  template: `<div class="topic-card" (click)="updatePrompt()">
+  @if (topic()) {
+    <h3 [innerHTML]="topic() | formatInlineCode"></h3>
+  }
+  @if (description()) {
+    <p [innerHTML]="description() | formatInlineCode"></p>
+  }
+</div>`,
   styles: [`.topic-card {
   background-color: var(--surface-container-low);
   border-radius: var(--border-radius-m);

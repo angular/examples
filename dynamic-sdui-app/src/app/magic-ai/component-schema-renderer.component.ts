@@ -7,7 +7,7 @@
  */
 import { ChangeDetectionStrategy, Component, input, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DynamicComponentSchema } from './magic-ai-service';
+import { DynamicComponentSchema } from './magic-ai.service';
 import { APP_CONTEXT } from './app-context';
 
 @Component({

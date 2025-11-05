@@ -9,7 +9,7 @@
 import { Injectable, inject, computed, linkedSignal } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MagicAiService } from '../magic-ai/magic-ai-service';
+import { MagicAiService } from '../magic-ai/magic-ai.service';
 
 @Injectable({
   providedIn: 'root'

@@ -29,7 +29,7 @@ import { ChatService } from '../../../chat/chat.service';
       transition: var(--haven-transition-default);
     }
     button:hover {
-        background-color: var(--haven-color-primary-dark);
+        background-color: var(--haven-primary-dark);
     }
   `],
 })

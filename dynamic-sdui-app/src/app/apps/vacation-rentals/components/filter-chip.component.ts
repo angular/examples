@@ -12,8 +12,43 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   selector: 'app-filter-chip',
   standalone: true,
   imports: [],
-  templateUrl: './filter-chip.component.html',
-  styleUrls: ['./filter-chip.component.css'],
+  template: `@if (icon(); as iconName) {
+  <span class="material-icons">{{ iconName }}</span>
+}
+<span>{{ filterName() }}</span>`,
+  styles: [`
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--haven-spacing-2, 8px);
+  font-family: var(--haven-font-family, sans-serif);
+  font-size: var(--haven-text-sm, 14px);
+  font-weight: var(--haven-font-weight-medium, 500);
+  padding: var(--haven-spacing-2, 8px) var(--haven-spacing-3, 16px);
+  border-radius: 9999px; /* Creates the "pill" shape */
+  border: var(--haven-border-default, 1px solid #EAEAEA);
+  background-color: var(--haven-surface, #FFFFFF);
+  color: var(--haven-text-secondary, #555555);
+  cursor: pointer;
+  user-select: none;
+  transition: var(--haven-transition-default, all 0.2s ease-in-out);
+}
+
+:host(:hover) {
+  border-color: var(--haven-text-primary, #222222);
+  color: var(--haven-text-primary, #222222);
+}
+
+:host.selected {
+  background-color: var(--haven-text-primary, #222222);
+  color: var(--haven-surface, #FFFFFF);
+  border-color: var(--haven-text-primary, #222222);
+}
+
+.material-icons {
+  font-size: 18px;
+}
+`],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.selected]': 'isSelected()',

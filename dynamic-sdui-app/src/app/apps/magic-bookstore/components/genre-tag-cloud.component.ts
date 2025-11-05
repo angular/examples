@@ -14,8 +14,61 @@ import { ChatService } from '../../../chat/chat.service';
   selector: 'app-genre-tag-cloud',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './genre-tag-cloud.component.html',
-  styleUrl: './genre-tag-cloud.component.css',
+  template: `<div class="tag-cloud-container">
+  @if (genres() && genres()!.length > 0) {
+    @for (genre of genres(); track genre) {
+      <button class="tag-chip genre-chip" (click)="searchByTerm(genre)">{{ genre }}</button>
+    }
+  }
+  @if (tags() && tags()!.length > 0) {
+    @for (tag of tags(); track tag) {
+      <button class="tag-chip tag-chip-secondary" (click)="searchByTerm(tag)">{{ tag }}</button>
+    }
+  }
+</div>`,
+  styles: [`.tag-cloud-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3);
+  background-color: var(--background);
+  border-radius: var(--border-radius-md);
+  border: var(--border-default);
+}
+
+.tag-chip {
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--border-radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: var(--transition-default);
+  border: none;
+  box-shadow: var(--shadow-subtle);
+}
+
+.genre-chip {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.genre-chip:hover {
+  background-color: var(--primary);
+  color: var(--surface);
+  box-shadow: var(--shadow-medium);
+}
+
+.tag-chip-secondary {
+  background-color: var(--border);
+  color: var(--text-secondary);
+}
+
+.tag-chip-secondary:hover {
+  background-color: var(--text-muted);
+  color: var(--surface);
+  box-shadow: var(--shadow-medium);
+}
+`],
 })
 export class GenreTagCloudComponent {
   chatService = inject(ChatService);

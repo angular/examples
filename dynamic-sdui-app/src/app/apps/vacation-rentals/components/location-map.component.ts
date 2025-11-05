@@ -17,8 +17,52 @@ export type Coordinates = {
   selector: 'app-location-map',
   standalone: true,
   imports: [],
-  templateUrl: './location-map.component.html',
-  styleUrls: ['./location-map.component.css'],
+  template: `<div class="container">
+  <div class="map-wrapper">
+    <img [src]="mapImageUrl()" alt="Approximate location of the property" fill priority>
+  </div>
+  <p class="location-description">{{ locationDescription() }}</p>
+</div>`,
+  styles: [`
+:host {
+  display: block;
+  font-family: var(--haven-font-family, sans-serif);
+  padding: var(--haven-spacing-5, 32px) 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+h2 {
+  font-size: var(--haven-text-xl, 24px);
+  font-weight: var(--haven-font-weight-semibold, 600);
+  color: var(--haven-text-primary, #222222);
+  margin: 0 0 var(--haven-spacing-4, 24px) 0;
+}
+
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 62 / 9;
+  border-radius: var(--haven-border-radius-lg, 12px);
+  overflow: hidden;
+  background-color: var(--haven-bg, #F9F9F9); /* Placeholder color */
+}
+
+.map-wrapper img {
+  /* object-fit is not needed when using the \`fill\` attribute with NgOptimizedImage */
+}
+
+.location-description {
+  font-size: var(--haven-text-base, 16px);
+  line-height: var(--haven-line-height-body, 1.6);
+  color: var(--haven-text-secondary, #555555);
+  margin: var(--haven-spacing-4, 24px) 0 0 0;
+  white-space: pre-line;
+}
+`],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LocationMapComponent {

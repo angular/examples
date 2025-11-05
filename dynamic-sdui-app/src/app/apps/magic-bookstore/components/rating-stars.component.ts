@@ -14,8 +14,30 @@ import { MatIconModule } from '@angular/material/icon'; // Assuming Material Ico
   selector: 'app-rating-stars',
   standalone: true,
   imports: [CommonModule, MatIconModule],
-  templateUrl: './rating-stars.component.html',
-  styleUrl: './rating-stars.component.css',
+  template: `<div class="star-rating">
+  @for (star of [].constructor(maxStars); track $index) {
+    <mat-icon class="star-icon" [class.filled]="getStarIcon($index) === 'star'" [class.half-filled]="getStarIcon($index) === 'star_half'">
+      {{ getStarIcon($index) }}
+    </mat-icon>
+  }
+</div>`,
+  styles: [`.star-rating {
+  display: flex;
+  align-items: center;
+  color: var(--accent-gold); /* Gold color for stars */
+}
+
+.star-icon {
+  font-size: var(--text-lg); /* Adjust size as needed */
+  width: var(--text-lg);
+  height: var(--text-lg);
+  color: var(--text-muted); /* Default for empty stars */
+}
+
+.star-icon.filled, .star-icon.half-filled {
+  color: var(--accent-gold);
+}
+`],
 })
 export class RatingStarsComponent {
   rating = input<number>();

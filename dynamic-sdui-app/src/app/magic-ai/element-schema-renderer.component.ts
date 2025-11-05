@@ -16,7 +16,7 @@ import {
   forwardRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DynamicElementSchema } from './magic-ai-service';
+import { DynamicElementSchema } from './magic-ai.service';
 import { MagicAiRenderer } from './magic-ai-renderer.component';
 
 @Directive({

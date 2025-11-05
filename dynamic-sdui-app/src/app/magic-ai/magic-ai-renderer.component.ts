@@ -7,11 +7,11 @@
  */
 import { ChangeDetectionStrategy, Component, input, computed, forwardRef, inject, HostBinding, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DynamicElementSchema, DynamicComponentSchema, TextSchema, DynamicSchema } from './magic-ai-service';
+import { DynamicElementSchema, DynamicComponentSchema, TextSchema, DynamicSchema } from './magic-ai.service';
 import { ElementSchemaRenderer } from './element-schema-renderer.component';
 import { ComponentSchemaRenderer } from './component-schema-renderer.component';
 import { TextSchemaRenderer } from './text-schema-renderer.component';
-import { MagicAiService } from './magic-ai-service';
+import { MagicAiService } from './magic-ai.service';
 import { APP_CONTEXT } from './app-context';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';

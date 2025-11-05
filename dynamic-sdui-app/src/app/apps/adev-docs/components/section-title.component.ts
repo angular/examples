@@ -14,8 +14,19 @@ import { FormatInlineCodePipe } from '../../../pipes/format-inline-code.pipe';
   selector: 'adev-section-title',
   standalone: true,
   imports: [CommonModule, FormatInlineCodePipe],
-  templateUrl: './section-title.component.html',
-  styleUrl: './section-title.component.css',
+  template: `@if (title()) {
+  <h2 class="section-title" [innerHTML]="title() | formatInlineCode"></h2>
+}`,
+  styles: [`.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--adev-docs-text);
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--adev-docs-border);
+}
+`],
 })
 export class SectionTitleComponent {
   title = input<string | undefined>();

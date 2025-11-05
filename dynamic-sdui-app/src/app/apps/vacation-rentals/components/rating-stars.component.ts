@@ -12,8 +12,52 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
   selector: 'app-rating-stars',
   standalone: true,
   imports: [],
-  templateUrl: './rating-stars.component.html',
-  styleUrls: ['./rating-stars.component.css'],
+  template: `<div class="rating-container">
+  <div class="stars">
+    <!-- Full Stars -->
+    @for (star of fullStars(); track $index) {
+      <span class="star material-icons">star</span>
+    }
+    <!-- Half Star -->
+    @if (hasHalfStar()) {
+      <span class="star material-icons">star_half</span>
+    }
+    <!-- Empty Stars -->
+    @for (star of emptyStars(); track $index) {
+      <span class="star material-icons">star_border</span>
+    }
+  </div>
+  @if (reviewCount(); as count) {
+    <span class="review-count">({{ count }})</span>
+  }
+</div>`,
+  styles: [`
+.rating-container {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--haven-spacing-2, 8px); /* Gap between stars and review count */
+  font-family: var(--haven-font-family, sans-serif);
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  color: var(--haven-accent-gold, #FFB400);
+}
+
+.star {
+  font-size: var(--haven-text-lg, 18px);
+  /* Prevents the user from selecting the icon text */
+  user-select: none; 
+}
+
+.review-count {
+  font-size: var(--haven-text-sm, 14px);
+  color: var(--haven-text-muted, #888888);
+  /* Nudge the count down slightly for better visual alignment with stars */
+  transform: translateY(1px);
+}
+`],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RatingStarsComponent {

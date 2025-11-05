@@ -53,8 +53,250 @@ import { SiteFooterComponent, FooterColumn, SocialLink } from './site-footer.com
     UserBookingCardComponent,
     SiteFooterComponent,
   ],
-  templateUrl: './component-showcase.component.html',
-  styleUrls: ['./component-showcase.component.css'],
+  template: `<div class="showcase-container">
+  <header class="showcase-header">
+    <h1>Haven Component Showcase</h1>
+    <p>A gallery of all available UI components, styled with the "Haven" theme.</p>
+  </header>
+
+  <!-- PropertyCardComponent -->
+  <section class="component-section">
+    <h2>PropertyCardComponent</h2>
+    <div class="component-display grid-3">
+      @for (prop of properties; track prop.title) {
+        <app-property-card [imageUrls]="prop.imageUrls" [location]="prop.location" [title]="prop.title" [pricePerNight]="prop.pricePerNight" [rating]="prop.rating" [reviewCount]="prop.reviewCount" />
+      }
+    </div>
+  </section>
+
+  <!-- RatingStarsComponent -->
+  <section class="component-section">
+    <h2>RatingStarsComponent</h2>
+    <div class="component-display">
+      <app-rating-stars [rating]="4.5" [reviewCount]="120" />
+      <app-rating-stars [rating]="3" />
+      <app-rating-stars [rating]="5" [reviewCount]="88" />
+    </div>
+  </section>
+
+  <!-- FilterChipComponent -->
+  <section class="component-section">
+    <h2>FilterChipComponent</h2>
+    <div class="component-display">
+      <app-filter-chip filterName="Pool" icon="pool" [isSelected]="true" />
+      <app-filter-chip filterName="Pet-Friendly" icon="pets" [isSelected]="false" />
+      <app-filter-chip filterName="Wifi" icon="wifi" [isSelected]="false" />
+      <app-filter-chip filterName="Free parking" [isSelected]="true" />
+    </div>
+  </section>
+
+  <!-- AlertBannerComponent -->
+  <section class="component-section">
+    <h2>AlertBannerComponent</h2>
+    <div class="component-display column">
+      @for (alert of alerts; track alert.status) {
+        <app-alert-banner [message]="alert.message" [status]="alert.status" [isDismissible]="true" />
+      }
+    </div>
+  </section>
+
+  <!-- DestinationCardComponent -->
+  <section class="component-section">
+    <h2>DestinationCardComponent</h2>
+    <div class="component-display grid-3">
+      @for (dest of destinations; track dest.destinationName) {
+        <app-destination-card [imageUrl]="dest.imageUrl" [destinationName]="dest.destinationName" [averagePrice]="dest.averagePrice" />
+      }
+    </div>
+  </section>
+
+  <!-- HostProfileCardComponent -->
+  <section class="component-section">
+    <h2>HostProfileCardComponent</h2>
+    <div class="component-display">
+      <app-host-profile-card [host]="superhost" />
+    </div>
+  </section>
+
+  <!-- AmenityListComponent -->
+  <section class="component-section">
+    <h2>AmenityListComponent</h2>
+    <div class="component-display column amenity-list-wrapper">
+      <app-amenity-list [amenities]="amenities" />
+    </div>
+  </section>
+
+  <!-- ReviewCardComponent -->
+  <section class="component-section">
+    <h2>ReviewCardComponent</h2>
+    <div class="component-display column">
+      @for (review of reviews; track review.author.name) {
+        <app-review-card [review]="review" />
+      }
+    </div>
+  </section>
+
+  <!-- PhotoGalleryGridComponent -->
+  <section class="component-section">
+    <h2>PhotoGalleryGridComponent</h2>
+    <div class="component-display">
+      <app-photo-gallery-grid [imageUrls]="propertyImages" propertyTitle="Modern Mountain Cabin" />
+    </div>
+  </section>
+
+  <!-- BookingWidgetComponent -->
+  <section class="component-section">
+    <h2>BookingWidgetComponent</h2>
+    <div class="component-display booking-widget-wrapper">
+      <app-booking-widget [pricePerNight]="320" [cleaningFee]="50" [serviceFeePercent]="0.1" [rating]="4.8" [reviewCount]="250" [maxGuests]="6" />
+    </div>
+  </section>
+
+  <!-- ListingHeaderComponent -->
+  <section class="component-section">
+    <h2>ListingHeaderComponent</h2>
+    <div class="component-display column">
+      <app-listing-header listingTitle="Stunning Modern Cabin with Mountain Views" location="Asheville, North Carolina" [rating]="4.9" [reviewCount]="150" />
+    </div>
+  </section>
+
+  <!-- ListingDescriptionComponent -->
+  <section class="component-section">
+    <h2>ListingDescriptionComponent</h2>
+    <div class="component-display column">
+      <app-listing-description [description]="listingDescription" />
+    </div>
+  </section>
+
+  <!-- RulesAndPoliciesComponent -->
+  <section class="component-section">
+    <h2>RulesAndPoliciesComponent</h2>
+    <div class="component-display column">
+      <app-rules-and-policies [rules]="houseRules" [policies]="housePolicies" />
+    </div>
+  </section>
+
+  <!-- LocationMapComponent -->
+  <section class="component-section">
+    <h2>LocationMapComponent</h2>
+    <div class="component-display column">
+      <app-location-map [coordinates]="mapLocation" [locationDescription]="'The cabin is located in a quiet, secluded area just 15 minutes from downtown Asheville.'" />
+    </div>
+  </section>
+
+  <!-- PaginationComponent -->
+  <section class="component-section">
+    <h2>PaginationComponent</h2>
+    <div class="component-display column">
+      <app-pagination [currentPage]="3" [totalPages]="10" [itemsPerPage]="10" [totalItems]="98" />
+    </div>
+  </section>
+
+  <!-- EmptyStateComponent -->
+  <section class="component-section">
+    <h2>EmptyStateComponent</h2>
+    <div class="component-display">
+      <app-empty-state icon="search_off" title="No results found" message="Try adjusting your filters or searching for a different location." actionButtonText="Clear all filters" />
+    </div>
+  </section>
+
+  <!-- UserBookingCardComponent -->
+  <section class="component-section">
+    <h2>UserBookingCardComponent</h2>
+    <div class="component-display column">
+      @for (booking of userBookings; track booking.property.name) {
+        <app-user-booking-card [booking]="booking" />
+      }
+    </div>
+  </section>
+
+</div>
+
+<!-- SiteFooterComponent -->
+<section class="component-section footer-section">
+  <h2>SiteFooterComponent</h2>
+  <app-site-footer [linkColumns]="footerColumns" [socialLinks]="socials" />
+</section>`,
+  styles: [`
+:host {
+  display: block;
+  font-family: var(--haven-font-family, sans-serif);
+  background-color: var(--haven-bg, #F9F9F9);
+  color: var(--haven-text-primary, #222222);
+}
+
+.showcase-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--haven-spacing-5, 32px);
+}
+
+.showcase-header {
+  text-align: center;
+  margin-bottom: var(--haven-spacing-6, 48px);
+  padding-bottom: var(--haven-spacing-4, 24px);
+  border-bottom: var(--haven-border-default, 1px solid #EAEAEA);
+}
+
+.showcase-header h1 {
+  font-size: var(--haven-text-xxl, 32px);
+  font-weight: var(--haven-font-weight-semibold, 600);
+  margin: 0 0 var(--haven-spacing-2, 8px) 0;
+}
+
+.showcase-header p {
+  font-size: var(--haven-text-lg, 18px);
+  color: var(--haven-text-secondary, #555555);
+  margin: 0;
+}
+
+.component-section {
+  margin-bottom: var(--haven-spacing-6, 48px);
+}
+
+.component-section h2 {
+  font-size: var(--haven-text-xl, 24px);
+  font-weight: var(--haven-font-weight-semibold, 600);
+  margin-bottom: var(--haven-spacing-4, 24px);
+  padding-bottom: var(--haven-spacing-3, 16px);
+  border-bottom: var(--haven-border-default, 1px solid #EAEAEA);
+}
+
+.component-display {
+  padding: var(--haven-spacing-4, 24px);
+  background-color: var(--haven-surface, #FFFFFF);
+  border-radius: var(--haven-border-radius-lg, 12px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--haven-spacing-4, 24px);
+}
+
+.component-display.column {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.component-display.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.booking-widget-wrapper {
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* Target the amenity list's container specifically to adjust padding */
+.amenity-list-wrapper {
+  padding-bottom: 0;
+}
+
+.footer-section {
+  margin-bottom: 0;
+  padding: 0 var(--haven-spacing-5, 32px);
+}
+`],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComponentShowcaseComponent {

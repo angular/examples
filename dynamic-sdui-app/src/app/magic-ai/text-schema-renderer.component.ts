@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.dev/license
  */
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { TextSchema } from './magic-ai-service';
+import { TextSchema } from './magic-ai.service';
 
 @Component({
   selector: 'text-schema-renderer',

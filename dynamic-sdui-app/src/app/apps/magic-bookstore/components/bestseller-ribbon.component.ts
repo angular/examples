@@ -13,8 +13,25 @@ import { CommonModule } from '@angular/common';
   selector: 'app-bestseller-ribbon',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './bestseller-ribbon.component.html',
-  styleUrl: './bestseller-ribbon.component.css',
+  template: `@if (rank(); as rank) {
+  <div class="bestseller-ribbon">
+    Bestseller #{{ rank }}
+  </div>
+}`,
+  styles: [`.bestseller-ribbon {
+  position: absolute;
+  top: var(--spacing-2);
+  right: var(--spacing-2);
+  background-color: var(--accent-gold);
+  color: var(--surface);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--border-radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  z-index: 10;
+  box-shadow: var(--shadow-subtle);
+}
+`],
 })
 export class BestsellerRibbonComponent {
   rank = input<number>();

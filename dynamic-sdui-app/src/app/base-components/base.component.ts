@@ -5,7 +5,28 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.dev/license
  */
-:host {
+import { Component, ChangeDetectionStrategy, computed } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChatComponent } from '../chat/chat.component';
+import { RouterOutlet } from '@angular/router';
+import { APP_CONTEXT } from '../magic-ai/app-context';
+
+@Component({
+  selector: 'app-base',
+  standalone: true,
+  imports: [CommonModule, ChatComponent, RouterOutlet],
+  template: `<div class="ai-mode-scaffold" [ngClass]="theme + '-theme'">
+<header class="app-header">
+    <h1>{{appName}}</h1>
+</header>
+<main class="main-content">
+    <div class="ai-content">
+        <router-outlet />
+    </div>
+    <app-chat />
+</main>
+</div>`,
+  styles: [`:host {
     display: block;
 }
 
@@ -77,4 +98,11 @@
 .ai-content {
     overflow-y: auto; /* Allow scrolling on the AI content area */
     padding: var(--spacing-4);
+}
+`],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class Base {
+  appName = APP_CONTEXT.appName;
+  theme = APP_CONTEXT.theme;
 }

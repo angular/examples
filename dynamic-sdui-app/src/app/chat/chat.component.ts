@@ -7,7 +7,7 @@
  */
 import { Component, effect, ElementRef, inject, HostBinding } from '@angular/core';
 import { ChatService } from './chat.service';
-import { MagicAiService } from '../magic-ai/magic-ai-service';
+import { MagicAiService } from '../magic-ai/magic-ai.service';
 import { FormsModule } from '@angular/forms';
 import { APP_CONTEXT } from '../magic-ai/app-context';
 import { FormatInlineCodePipe } from '../pipes/format-inline-code.pipe';

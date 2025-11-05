@@ -14,8 +14,26 @@ import { RatingStarsComponent } from './rating-stars.component';
   selector: 'app-review-summary',
   standalone: true,
   imports: [CommonModule, RatingStarsComponent],
-  templateUrl: './review-summary.component.html',
-  styleUrl: './review-summary.component.css',
+  template: `<div class="review-summary">
+  @if (averageRating()) {
+    <app-rating-stars [rating]="averageRating()"></app-rating-stars>
+  }
+  @if (reviewCount() !== undefined) {
+    <span class="review-count">({{ reviewCount() }} reviews)</span>
+  }
+</div>`,
+  styles: [`.review-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+}
+
+.review-count {
+  color: var(--text-muted);
+}
+`],
 })
 export class ReviewSummaryComponent {
   averageRating = input<number>();

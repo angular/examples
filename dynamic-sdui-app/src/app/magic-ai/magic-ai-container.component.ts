@@ -16,7 +16,7 @@ import {
 import {CommonModule} from '@angular/common';
 import { Router } from '@angular/router';
 import { MagicAiRenderer } from './magic-ai-renderer.component';
-import { MagicAiService } from './magic-ai-service';
+import { MagicAiService } from './magic-ai.service';
 
 @Component({
   selector: 'magic-ai-component',

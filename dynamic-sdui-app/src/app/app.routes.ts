@@ -6,8 +6,8 @@
  * found in the LICENSE file at https://angular.dev/license
  */
 import { Routes } from '@angular/router';
-import { Base } from './base-components/base';
-import { MagicAiComponent } from './magic-ai/magic-ai-container';
+import { Base } from './base-components/base.component';
+import { MagicAiComponent } from './magic-ai/magic-ai-container.component';
 import { FavoritesListComponent } from './apps/vacation-rentals/components/favorites-list.component';
 import { ShowcaseDirectoryComponent } from './showcase/showcase-directory.component'
 

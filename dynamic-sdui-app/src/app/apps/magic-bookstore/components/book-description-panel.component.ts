@@ -13,8 +13,59 @@ import { CommonModule } from '@angular/common';
   selector: 'app-book-description-panel',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './book-description-panel.component.html',
-  styleUrl: './book-description-panel.component.css',
+  template: `@if (description(); as description) {
+  <div class="description-panel">
+    <h3 class="panel-title">Description</h3>
+    <p class="book-description">
+      {{ displayDescription }}
+    </p>
+    @if (showToggle) {
+      <button class="read-more-button" (click)="toggleExpand()">
+        {{ isExpanded() ? 'Read Less' : 'Read More' }}
+      </button>
+    }
+  </div>
+}`,
+  styles: [`.description-panel {
+  background-color: var(--surface);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-subtle);
+  padding: var(--spacing-5);
+  border: var(--border-default);
+}
+
+.panel-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-4);
+  border-bottom: var(--border-default);
+  padding-bottom: var(--spacing-2);
+}
+
+.book-description {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  line-height: var(--line-height-body);
+  margin-bottom: var(--spacing-3);
+}
+
+.read-more-button {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  padding: 0;
+  transition: var(--transition-default);
+}
+
+.read-more-button:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+`],
 })
 export class BookDescriptionPanelComponent {
   description = input<string>();
