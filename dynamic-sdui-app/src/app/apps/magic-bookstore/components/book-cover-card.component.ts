@@ -8,7 +8,6 @@
 
 import { Component, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Book } from '../data-store';
 import { ChatService } from '../../../chat/chat.service';
 import { RatingStarsComponent } from './rating-stars.component';
@@ -17,14 +16,12 @@ import { BestsellerRibbonComponent } from './bestseller-ribbon.component';
 @Component({
   selector: 'app-book-cover-card',
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule, RatingStarsComponent, BestsellerRibbonComponent],
+  imports: [CommonModule, RatingStarsComponent, BestsellerRibbonComponent],
   template: `@if (book(); as book) {
   <div class="book-card" (click)="viewDetails(book.title)">
     <div class="cover-container">
       @if (book.coverImgUrl) {
         <img [src]="book.coverImgUrl" alt="Cover of {{ book.title }}" class="book-cover">
-      } @else {
-        <mat-spinner diameter="50"></mat-spinner>
       }
       @if (book.bestsellerRank) {
         <app-bestseller-ribbon [rank]="book.bestsellerRank"></app-bestseller-ribbon>
@@ -65,7 +62,6 @@ import { BestsellerRibbonComponent } from './bestseller-ribbon.component';
 
 .book-card:hover {
   box-shadow: var(--shadow-medium);
-  transform: translateY(-2px);
 }
 
 .cover-container {
@@ -90,14 +86,6 @@ import { BestsellerRibbonComponent } from './bestseller-ribbon.component';
   object-fit: cover;
   border-top-left-radius: var(--border-radius-md);
   border-top-right-radius: var(--border-radius-md);
-}
-
-mat-spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  --mdc-circular-progress-active-indicator-color: var(--primary);
 }
 
 .book-info {

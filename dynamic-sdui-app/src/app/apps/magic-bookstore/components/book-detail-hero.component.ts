@@ -8,21 +8,22 @@
 
 import { Component, input, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Book } from '../data-store';
 import { RatingStarsComponent } from './rating-stars.component';
+import { BestsellerRibbonComponent } from './bestseller-ribbon.component';
 
 @Component({
   selector: 'app-book-detail-hero',
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule, RatingStarsComponent],
+  imports: [CommonModule, RatingStarsComponent, BestsellerRibbonComponent],
   template: `@if (book(); as book) {
   <div class="hero-section">
     <div class="cover-image-container">
       @if (book.coverImgUrl) {
         <img [src]="book.coverImgUrl" alt="Cover of {{ book.title }}" class="book-cover-hero">
-      } @else {
-        <mat-spinner diameter="70"></mat-spinner>
+      }
+      @if (book.bestsellerRank) {
+        <app-bestseller-ribbon [rank]="book.bestsellerRank"></app-bestseller-ribbon>
       }
     </div>
     <div class="details-container">
@@ -69,6 +70,7 @@ import { RatingStarsComponent } from './rating-stars.component';
 }
 
 .cover-image-container {
+  position: relative;
   flex-shrink: 0;
   width: 300px; /* Fixed width for the cover */
   height: 450px; /* Aspect ratio for book covers */
@@ -86,10 +88,6 @@ import { RatingStarsComponent } from './rating-stars.component';
   height: 100%;
   object-fit: cover;
   border-radius: var(--border-radius-lg);
-}
-
-mat-spinner {
-  --mdc-circular-progress-active-indicator-color: var(--primary);
 }
 
 .details-container {

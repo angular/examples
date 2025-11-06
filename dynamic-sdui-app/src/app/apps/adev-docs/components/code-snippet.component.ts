@@ -6,26 +6,30 @@
  * found in the LICENSE file at https://angular.dev/license
  */
 
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Highlight } from 'ngx-highlightjs';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MagicAiService } from '../../../magic-ai/magic-ai.service';
 
 @Component({
   selector: 'adev-code-snippet',
   standalone: true,
-  imports: [CommonModule, Highlight, MatIconModule, MatProgressBarModule],
-  template: `@if (code() && language()) {
+  imports: [CommonModule, Highlight, MatIconModule],
+  template: `
+
+@if (!code() || !language() || !this.magicAiService.isStreamComplete()) {
+  <div class="code-snippet-container">
+    <div class="placeholder-loading">
+      <p>Loading...</p>
+    </div>
+  </div>
+} @else {
   <div class="code-snippet-container">
     <pre><code [highlight]="code()!" [language]="language()!"></code></pre>
     <button class="copy-button" (click)="copyCode()">
       <mat-icon>content_copy</mat-icon>
     </button>
-  </div>
-} @else {
-  <div class="code-snippet-container">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   </div>
 }`,
   styles: [`.code-snippet-container {
@@ -63,10 +67,23 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 code {
   border: var(--adev-docs-border-default);
   border-radius: var(--adev-docs-border-radius-md);
+  margin: 10px 0;
+}
+
+.placeholder-loading {
+  background-color: #282c34;
+  min-height: 30px;
+  color: #abb2bf;
+  border: var(--adev-docs-border-default);
+  border-radius: var(--adev-docs-border-radius-md);
+  padding: 16px;
+  font-family: var(--default-mono-font-family);
+  margin: 10px 0;
 }
 `],
 })
 export class CodeSnippetComponent {
+  magicAiService = inject(MagicAiService);
   code = input<string | undefined>();
   language = input<string | undefined>();
 

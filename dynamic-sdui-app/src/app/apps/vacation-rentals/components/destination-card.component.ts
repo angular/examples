@@ -29,7 +29,6 @@ import { ChatService } from '../../../chat/chat.service';
 }
 
 :host(:hover) {
-  transform: translateY(-4px);
   box-shadow: var(--haven-shadow-medium, 0px 6px 16px rgba(0, 0, 0, 0.08));
 }
 

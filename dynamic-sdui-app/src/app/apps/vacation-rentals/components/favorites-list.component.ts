@@ -57,7 +57,6 @@ import { DecimalPipe } from '@angular/common';
 
 .favorite-item:hover {
   box-shadow: var(--haven-shadow-medium);
-  transform: translateY(-2px);
 }
 
 .favorite-item-content {

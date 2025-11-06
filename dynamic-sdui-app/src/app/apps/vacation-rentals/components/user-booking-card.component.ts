@@ -68,7 +68,6 @@ export type Booking = {
 
 .card-container:hover {
   box-shadow: var(--haven-shadow-medium, 0px 6px 16px rgba(0, 0, 0, 0.08));
-  transform: translateY(-2px);
 }
 
 .image-wrapper {

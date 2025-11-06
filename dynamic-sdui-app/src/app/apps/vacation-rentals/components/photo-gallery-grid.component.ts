@@ -92,7 +92,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 .show-all-photos-button:hover {
   box-shadow: var(--haven-shadow-medium, 0px 6px 16px rgba(0, 0, 0, 0.08));
-  transform: translateY(-2px);
 }
 
 .show-all-photos-button .material-icons {

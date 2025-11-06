@@ -275,13 +275,11 @@ You will now perform the following actions:
           * *Example:* `chatService = inject(ChatService);`
       * **CRITICAL RULE 5 (Chat Service):** For any buttons or links related to search, discovery, or navigation (e.g., "View Details", "Explore"), you **must** import `ChatService` from `../../../chat/chat.service` and call `this.chatService.addUserPrompt()` with an appropriate instructional prompt.
       * **CRITICAL RULE 6 (Action Buttons):** For buttons that imply a stateful action (e.g., "Add to Cart", "Add to Wishlist"), simply log a message to the console (e.g., `console.log('Add to cart clicked')`).
-      * **CRITICAL RULE 7 (Image Loading):** When using `<img>` tags, you **must** show a spinner if the `src` is `undefined` or `''`. Import `MatProgressSpinnerModule` (from `@angular/material/progress-spinner`) in the standalone component and use this structure:
+      * **CRITICAL RULE 7 (Image Loading):** When using `<img>` tags, you **must** not show the image if `src` is `undefined` or `''`. Use this structure:
           * *Example:*
             ```html
             @if (imageUrl()) {
               <img [src]="imageUrl()">
-            } @else {
-              <mat-spinner diameter="50"></mat-spinner>
             }
             ```
 4.  **Generate `app-context.ts`:**
@@ -571,7 +569,7 @@ You will now perform the following actions:
      * *Example:* chatService = inject(ChatService);  
    * **CRITICAL RULE 5 (Chat Service):** For any buttons or links related to search, discovery, or navigation (e.g., "View Details", "Explore"), you **must** import ChatService from ../../../chat/chat.service and call this.chatService.addUserPrompt() with an appropriate instructional prompt.  
    * **CRITICAL RULE 6 (Action Buttons):** For buttons that imply a stateful action (e.g., "Add to Cart", "Add to Wishlist"), simply log a message to the console (e.g., console.log('Add to cart clicked')).  
-   * **CRITICAL RULE 7 (Image Loading):** When using <img> tags, you **must** show a spinner if the src is undefined or ''. Import MatProgressSpinnerModule (from @angular/material/progress-spinner) in the standalone component and use this structure:  
+      * **CRITICAL RULE 7 (Image Loading):** When using `<img>` tags, you **must** not show the image if `src` is `undefined` or `''`. Use this structure:
      * *Example:*  
      * HTML
 
@@ -579,8 +577,6 @@ You will now perform the following actions:
 
 @if (imageUrl()) {
   <img [src]="imageUrl()">
-} @else {
-  <mat-spinner diameter="50"></mat-spinner>
 }
 
 ```

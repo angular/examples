@@ -15,7 +15,6 @@ import { FullReviewCardComponent } from './components/full-review-card.component
 import { GenreTagCloudComponent } from './components/genre-tag-cloud.component';
 import { BookSpecificationsComponent } from './components/book-specifications.component';
 import { AwardBadgeComponent } from './components/award-badge.component';
-import { BestsellerRibbonComponent } from './components/bestseller-ribbon.component';
 import { SeriesInfoCardComponent } from './components/series-info-card.component';
 import { BookDescriptionPanelComponent } from './components/book-description-panel.component';
 import { StockAvailabilityComponent } from './components/stock-availability.component';
@@ -89,14 +88,6 @@ const GENERATED_COMPONENT_CONTEXT_DATA: ComponentContext[] = [
     },
   },
   {
-    name: 'BestsellerRibbonComponent',
-    description: "Visually indicates a book's bestseller rank.",
-    type: 'dynamicComponent',
-    inputs: {
-      rank: { type: 'number', description: "The bestseller rank of the book.", required: true },
-    },
-  },
-  {
     name: 'SeriesInfoCardComponent',
     description: "Displays information about the book's series.",
     type: 'dynamicComponent',
@@ -141,7 +132,6 @@ const GENERATED_COMPONENT_MAP: { [key: string]: Type<any> } = {
   GenreTagCloudComponent: GenreTagCloudComponent,
   BookSpecificationsComponent: BookSpecificationsComponent,
   AwardBadgeComponent: AwardBadgeComponent,
-  BestsellerRibbonComponent: BestsellerRibbonComponent,
   SeriesInfoCardComponent: SeriesInfoCardComponent,
   BookDescriptionPanelComponent: BookDescriptionPanelComponent,
   StockAvailabilityComponent: StockAvailabilityComponent,

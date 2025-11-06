@@ -8,20 +8,19 @@
 
 import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Author } from '../data-store';
 
 @Component({
   selector: 'app-author-bio-card',
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule],
+  imports: [CommonModule],
   template: `@if (author(); as author) {
   <div class="author-card">
     <div class="author-image-container">
       @if (author.imageUrl) {
         <img [src]="author.imageUrl" alt="Photo of {{ author.name }}" class="author-image">
       } @else {
-        <mat-spinner diameter="50"></mat-spinner>
+        <div class="author-initials">{{ getInitials(author.name) }}</div>
       }
     </div>
     <div class="author-info">
@@ -60,8 +59,10 @@ import { Author } from '../data-store';
   object-fit: cover;
 }
 
-mat-spinner {
-  --mdc-circular-progress-active-indicator-color: var(--primary);
+.author-initials {
+  font-size: 48px;
+  font-weight: bold;
+  color: var(--primary);
 }
 
 .author-info {
@@ -87,4 +88,15 @@ mat-spinner {
 })
 export class AuthorBioCardComponent {
   author = input<Author>();
+
+  getInitials(name: string): string {
+    if (!name) {
+      return '';
+    }
+    const names = name.split(' ');
+    if (names.length > 1) {
+      return `${names[0][0]}${names[names.length - 1][0]}`;
+    }
+    return names[0][0];
+  }
 }
