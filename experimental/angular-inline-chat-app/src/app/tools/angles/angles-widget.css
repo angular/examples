@@ -1,0 +1,56 @@
+:host {
+  display: flex;
+  gap: 32px;
+  padding: 12px;
+  align-items: center;
+  --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: var(--system-ui);
+
+  --purple: rgb(172, 39, 251);
+  --red: rgb(245, 1, 69);
+  --pink: rgb(250, 50, 190);
+
+  --primary-bg: #000;
+  --primary-bg-light: #333;
+  --primary-fg: oklch(98.81% 0 0);
+}
+
+.shape-wrap {
+  background-image: conic-gradient(var(--pink), var(--purple), var(--red), var(--pink));
+  border-radius: 50%;
+}
+
+svg {
+  animation: flipper 10s linear 0s infinite forwards;
+}
+
+svg > path {
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-width: 8px;
+  fill: #fff;
+  filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.2));
+}
+
+button {
+  transition: background-color 0.3s;
+  font-family: system-ui, sans-serif;
+  line-height: 24px;
+  padding: 8px 24px;
+  font-size: 16px;
+  border-radius: 24px;
+  background-color: var(--primary-bg);
+  color: var(--primary-fg);
+}
+
+button:hover {
+  background-color: var(--primary-bg-light);
+}
+
+@keyframes flipper {
+  0% {
+    transform: rotate3d(0, 1, 0, 0);
+  }
+  100% {
+    transform: rotate3d(0, 1, 0, 1turn);
+  }
+}
