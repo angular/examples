@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "^19.2.4",
     "@angular/platform-server": "^19.2.4",
     "@angular/router": "^19.2.4",
-    "@angular/ssr": "^19.2.5",
+    "@angular/ssr": "^19.2.19",
     "@genkit-ai/express": "^1.0.4",
     "@genkit-ai/googleai": "^1.0.4",
     "data-urls": "^5.0.0",
