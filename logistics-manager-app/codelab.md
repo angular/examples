@@ -24,32 +24,36 @@ cd logistics-manager-app
 npm install
 ```
 
-### 2. Install Gemini CLI Skills
-Skills provide the agent with specialized knowledge. You'll add the `angular-developer`, `gemini-sdk`, and `gemini-interactions-api` skills to help with code generation and API integration.
+### 2. Install Agent Skills
+Skills provide the agent with specialized knowledge. You'll add the `angular-developer` and `developing-genkit-js` skills to help with Angular code generation and Genkit AI integration.
 
 ```bash
 # Add Angular expertise
-npx skills install https://github.com/angular/skills/ --skill angular-developer
+npx skills add https://github.com/angular/skills/ --skill angular-developer
 
-# Add Gemini SDK expertise
-npx skills add https://github.com/google-gemini/gemini-skills --skill gemini-api-dev
-npx skills add https://github.com/google-gemini/gemini-skills --skill gemini-interactions-api
+# Add Genkit JS expertise
+npx skills add firebase/genkit --skill developing-genkit-js
 ```
 
-Confirm that the agent skills are installed by using the `/skills` commands in Gemini CLI. This may require restarting Gemini CLI.
+Confirm that the agent skills are installed by using the `/skills` commands in your CLI. This may require restarting the CLI.
 
-_Note: You do not have to use the `skills` npm package, you are welcome to use whichever agent skills manager you prefer.
+_Note: You do not have to use the `skills` npm package, you are welcome to use whichever agent skills manager you prefer._
 
-### 3. Configure MCP Servers
-You can use Model Context Protocol (MCP) to enable your AI tools to interact with your running application and the browser.
+### 3. Configure Plugins & MCP Servers
+You can use Model Context Protocol (MCP) and plugins to enable your AI tools to interact with your running application and the browser.
 
 #### Angular MCP Server
-This server allows the AI tooling to understand your Angular project structure, components,services and more. Use the Angular CLI to get the configuration for the MCP server.
+This server allows the AI tooling to understand your Angular project structure, components, services, and control the development server (`devserver.start`, `devserver.wait_for_build`, `devserver.stop`).
 
-#### Chrome DevTools MCP Server
+#### Chrome DevTools Plugin (`chrome-devtools-plugin`)
 This allows the AI to inspect the running application in your browser for debugging and UI analysis.
 
-Add the following configuration to your environment, for example, `.gemini/setting.json`:
+In Antigravity CLI, install the plugin:
+```text
+/plugin install chrome-devtools-plugin
+```
+
+Add the following configuration to `.gemini/settings.json`:
 
 ```json
 {
@@ -59,15 +63,17 @@ Add the following configuration to your environment, for example, `.gemini/setti
       "args": [
         "-y",
         "@angular/cli",
-        "mcp",
-        "-E",
-        "devserver"
+        "mcp"
+      ],
+      "disabledTools": [
+        "ai_tutor"
       ]
     },
     "chrome-devtools": {
       "command": "npx",
       "args": [
-        "chrome-devtools-mcp@latest"
+        "--yes",
+        "chrome-devtools-mcp@1.10.1"
       ]
     }
   }

@@ -213,7 +213,7 @@ import { ServiceTicket } from '../../../fleet-db';
     }
   `,
   host: {
-    'class': 'block flex-1 overflow-hidden'
+    'class': 'flex flex-col flex-1 overflow-hidden'
   }
 })
 export class ServiceQueue {

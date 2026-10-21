@@ -1,11 +1,12 @@
 # Add communication from the client side app to the AI chat endpoint via the chat window in the web app. 
 
 Task:
-1. Review the endpoint and chat window code to understand where to integrate.
+1. Review the `/api/chat` endpoint and chat window code (`src/app/components/chat/chat.ts`) to understand where to integrate.
 
-2. Outline a plan to implement the communication between the client and the server.
-    - Use the **`@google/genai` interactions API**. Extract the generated message from the first text object in `interaction.outputs`. Refer to the documention if you get stuck: https://ai.google.dev/gemini-api/docs/interactions.md.txt
+2. Outline a plan to implement the communication between the client and the server:
+    - Use the Angular **`resource`** API for the client requests to `/api/chat`.
+    - Send the user's `prompt` and display the user and AI messages in the chat window, automatically scrolling the messages container to the bottom when new messages arrive.
 
 3. For verification:
-    - build the app and confirm that the build is error free. Use the Angular MCP server tools.
-    - you may also use the ChromeDevTools MCP server to preview the build in a browser
+    - Build the app and confirm that the build is error free. Use the Angular MCP server tools.
+    - Use the `chrome-devtools` skill (`chrome-devtools-plugin`) in the browser (do not use `curl`) to preview and verify the chat UI end-to-end.
