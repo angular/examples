@@ -24,7 +24,7 @@ export class FleetService {
   readonly units = computed(() => this.unitsResource.value() ?? []);
   readonly serviceQueue = computed(() => this.serviceQueueResource.value() ?? []);
 
-  readonly activeUnitId = signal<string | null>('V-UNIT 01_BETA');
+  readonly activeUnitId = signal<string | null>(null);
   readonly isDarkMode = signal(true);
   readonly isChatOpen = signal(false);
   

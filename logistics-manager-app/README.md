@@ -1,59 +1,78 @@
-# LogisticsManagerApp
+# Obsidian Logistics Manager — Angular + Genkit Agentic Demo
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.3.
+An interactive fleet and service-queue management web application built with **Angular 21** (Signals, `resource`, `linkedSignal`, Angular Aria, SSR with Express) and **Genkit** (`genkit` + `@genkit-ai/google-genai` powered by `gemini-3-flash-preview`).
 
-## Development server
+This repository accompanies the live stage demo showing how to pair-program with an AI coding agent using **Agent Skills**, **MCP Servers**, and **Antigravity Plugins** (`chrome-devtools-plugin`).
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## Branches & Demo Steps
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+You can either start on **`main`** and run each prompt in [`content/prompts/`](./content/prompts/) with your coding agent, or check out any of the completed checkpoint branches directly:
 
-## Code scaffolding
+| Branch | Prompt | Description |
+| :--- | :--- | :--- |
+| **`main`** | — | Clean starter baseline with fleet map, inventory list, service queue, and static chat shell. |
+| **`step-1`** | [`content/prompts/prompt-1.md`](./content/prompts/prompt-1.md) | Initializes Genkit with `googleAI()` (`gemini-3-flash-preview`) and adds the `POST /api/chat` endpoint in `src/server.ts`. |
+| **`step-2`** | [`content/prompts/prompt-2.md`](./content/prompts/prompt-2.md) | Connects the client chat UI (`src/app/components/chat/chat.ts`) to `/api/chat` using the Angular `resource` API and `afterRenderEffect` auto-scrolling. |
+| **`step-3`** | [`content/prompts/prompt-3.md`](./content/prompts/prompt-3.md) | Defines 7 Genkit fleet & service-queue tools (`ai.defineTool`) in `src/server.ts` and synchronizes UI state using Angular `resource`, `linkedSignal`, and `.reload()`. |
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+To jump straight to the completed application with full Genkit tool calling:
 
 ```bash
-ng generate --help
+git checkout step-3
 ```
 
-## Building
+---
 
-To build the project run:
+## Getting Started
+
+### 1. Install Dependencies
 
 ```bash
-ng build
+npm install
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### 2. Configure Environment Variables
 
-## Running unit tests
+Create a `.env` file in the project root:
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+```env
+GEMINI_API_KEY="your_gemini_api_key_here"
+```
+
+### 3. Install Agent Skills & Plugins (For Running the Prompts)
+
+If you want to run the prompts in [`content/prompts/`](./content/prompts/) with an AI coding agent from `main`:
+
+1. **Install the Angular & Genkit Agent Skills**:
+   ```bash
+   npx skills add https://github.com/angular/skills --skill angular-developer
+   npx skills add firebase/genkit --skill developing-genkit-js
+   ```
+
+2. **Install the Chrome DevTools Plugin** (in Antigravity CLI):
+   ```text
+   /plugin install chrome-devtools-plugin
+   ```
+
+3. **MCP Configuration**:
+   - Project MCP settings are included in [`.gemini/settings.json`](./.gemini/settings.json), and agent workspace guidelines are defined in [`AGENTS.md`](./AGENTS.md).
+
+---
+
+## Development Server & Building
+
+To start the local development server:
 
 ```bash
-ng test
+npm start
 ```
 
-## Running end-to-end tests
+Open `http://localhost:4200/` in your browser.
 
-For end-to-end (e2e) testing, run:
+To build the project for production:
 
 ```bash
-ng e2e
+npm run build
 ```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

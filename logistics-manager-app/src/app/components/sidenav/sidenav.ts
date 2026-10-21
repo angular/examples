@@ -8,19 +8,6 @@ import { Component } from '@angular/core';
       <button class="bg-surface-container-highest text-primary border-l-4 border-primary p-2 transition-colors">
         <span class="material-symbols-outlined">local_shipping</span>
       </button>
-      <button class="text-on-surface/60 hover:text-on-surface hover:bg-surface-container-highest/50 transition-all p-2">
-        <span class="material-symbols-outlined">biotech</span>
-      </button>
-      <button class="text-on-surface/60 hover:text-on-surface hover:bg-surface-container-highest/50 transition-all p-2">
-        <span class="material-symbols-outlined">map</span>
-      </button>
-      <button class="text-on-surface/60 hover:text-on-surface hover:bg-surface-container-highest/50 transition-all p-2">
-        <span class="material-symbols-outlined">monitoring</span>
-      </button>
-
-      <button class="mt-auto text-on-surface/60 hover:text-on-surface hover:bg-surface-container-highest/50 transition-all p-2">
-        <span class="material-symbols-outlined">help_outline</span>
-      </button>
     </nav>
   `
 })

@@ -5,10 +5,14 @@ import {
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
 import express from 'express';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { loadEnvFile } from 'node:process';
+import { parseEnv } from 'node:util';
 import { fleetDb, FleetUnit, ServiceTicket } from './fleet-db';
-loadEnvFile();
+
+if (existsSync('.env')) {
+  Object.assign(process.env, parseEnv(readFileSync('.env', 'utf-8')));
+}
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 const app = express();
@@ -50,6 +54,28 @@ export function deleteServiceTicket(id: string): boolean {
 }
 
 // --- REST API ENDPOINTS ---
+app.get('/api/tiles/:style/:z/:x/:y', async (req, res) => {
+  try {
+    const { style, z, x, y } = req.params;
+    const key = process.env['CARTO_API_KEY'] ?? '';
+    const basePath = style === 'voyager' ? 'rastertiles/voyager' : style;
+    const cartoUrl = `https://basemaps.cartocdn.com/${basePath}/${z}/${x}/${y}?key=${key}`;
+
+    const response = await fetch(cartoUrl);
+    if (!response.ok) {
+      res.status(response.status).end();
+      return;
+    }
+
+    res.setHeader('Content-Type', response.headers.get('content-type') || 'image/png');
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    const buffer = Buffer.from(await response.arrayBuffer());
+    res.send(buffer);
+  } catch {
+    res.status(500).end();
+  }
+});
+
 app.get('/api/fleet', (req, res) => {
   res.json(getAllFleetUnits());
 });

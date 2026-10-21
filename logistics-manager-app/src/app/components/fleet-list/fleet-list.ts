@@ -84,11 +84,11 @@ import { FleetDetailModal } from '../fleet-detail-modal/fleet-detail-modal';
             <tbody class="divide-y divide-outline-variant/10">
               @for (unit of filteredUnits(); track unit.id) {
                 <tr class="hover:bg-primary/5 transition-colors group cursor-pointer"
-                    (click)="selectedUnit.set(unit)">
+                    (click)="selectUnit(unit)">
                   <td class="px-6 py-4">
                     <div class="flex items-center gap-3">
                       <div class="w-2 h-2 rounded-full" [class]="getStatusColor(unit.status)"></div>
-                      <span class="text-xs font-bold font-mono text-on-surface group-hover:text-primary transition-colors">{{ unit.id }}</span>
+                      <span class="text-xs font-bold font-mono text-on-surface group-hover:text-primary transition-colors hover:underline decoration-primary/30 decoration-2 underline-offset-4">{{ unit.id }}</span>
                     </div>
                   </td>
                   <td class="px-6 py-4">
@@ -133,7 +133,7 @@ import { FleetDetailModal } from '../fleet-detail-modal/fleet-detail-modal';
     </div>
   `,
   host: {
-    'class': 'block flex-1 overflow-hidden'
+    'class': 'flex flex-col flex-1 overflow-hidden'
   }
 })
 export class FleetList {
@@ -211,5 +211,10 @@ export class FleetList {
     if (val < 20) return 'bg-error';
     if (val < 50) return 'bg-warning text-warning'; // Assuming warning utility if available
     return 'bg-primary';
+  }
+
+  selectUnit(unit: FleetUnit) {
+    this.selectedUnit.set(unit);
+    this.fleetService.setActiveUnit(unit.id);
   }
 }

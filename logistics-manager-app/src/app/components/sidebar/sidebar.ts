@@ -1,4 +1,4 @@
-import { Component, inject, effect, afterNextRender, Injector } from '@angular/core';
+import { Component, inject, effect, afterNextRender, Injector, signal, computed } from '@angular/core';
 import { FleetService, FleetUnit } from '../../services/fleet.service';
 
 @Component({
@@ -19,18 +19,31 @@ import { FleetService, FleetUnit } from '../../services/fleet.service';
 
     <!-- Scrollable Content Area -->
     <div class="flex-1 overflow-y-auto p-4 space-y-4">
-      <!-- Critical Alert Card -->
-      <div class="p-3 bg-secondary-container/20 border border-secondary shadow-sm rounded-lg">
-        <div class="flex justify-between items-start mb-2">
-          <span class="font-label text-[0.6rem] font-black uppercase text-secondary tracking-widest">CRITICAL ALERT</span>
-          <span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">warning</span>
+      <!-- Critical Alert Carousel -->
+      @if (criticalUnits().length > 0) {
+        @let current = currentAlert();
+        <div class="p-3 bg-secondary-container/20 border border-secondary shadow-sm rounded-lg">
+          <div class="flex justify-between items-start mb-2">
+            <div class="flex flex-col">
+              <span class="font-label text-[0.6rem] font-black uppercase text-secondary tracking-widest">CRITICAL ALERT</span>
+              <span class="font-label text-[0.6rem] text-secondary/70">{{ currentAlertIndex() + 1 }} / {{ criticalUnits().length }}</span>
+            </div>
+            <div class="flex items-center gap-1">
+              <button (click)="prevAlert()" class="material-symbols-outlined text-secondary text-lg hover:bg-secondary/10 rounded-full transition-colors">chevron_left</button>
+              <button (click)="nextAlert()" class="material-symbols-outlined text-secondary text-lg hover:bg-secondary/10 rounded-full transition-colors">chevron_right</button>
+              <span class="material-symbols-outlined text-secondary text-sm ml-1" style="font-variation-settings: 'FILL' 1;">warning</span>
+            </div>
+          </div>
+          <h3 class="font-headline font-black text-sm text-on-surface cursor-pointer hover:text-secondary transition-colors inline-block" 
+              (click)="current && selectUnit(current)">
+            {{ current?.id }}
+          </h3>
+          <p class="font-label text-[0.68rem] text-secondary mt-1">POWER CELL DEPLETION CRITICAL: {{ current?.battery }}</p>
+          <div class="mt-2 w-full bg-surface-variant h-1 rounded-full overflow-hidden">
+            <div class="bg-secondary h-full shadow-sm transition-all duration-500" [style.width]="current?.battery"></div>
+          </div>
         </div>
-        <h3 class="font-headline font-black text-sm text-on-surface">V-UNIT 04_ALPHA</h3>
-        <p class="font-label text-[0.68rem] text-secondary mt-1">POWER CELL DEPLETION CRITICAL: 4%</p>
-        <div class="mt-2 w-full bg-surface-variant h-1 rounded-full overflow-hidden">
-          <div class="bg-secondary h-full w-[4%] shadow-sm"></div>
-        </div>
-      </div>
+      }
 
       <!-- Fleet List -->
       <div class="space-y-1">
@@ -49,7 +62,7 @@ import { FleetService, FleetUnit } from '../../services/fleet.service';
                [class.bg-opacity-10]="unit.active"
                (click)="selectUnit(unit)">
             <div class="flex justify-between">
-              <span class="font-headline font-bold text-xs uppercase text-on-surface">{{ unit.id }}</span>
+              <span class="font-headline font-bold text-xs uppercase text-on-surface group-hover:text-primary transition-colors">{{ unit.id }}</span>
               <span class="font-label text-[0.65rem] font-medium" [class.text-primary]="unit.active" [class.text-on-surface-variant]="!unit.active">
                 {{ unit.status }}
               </span>
@@ -74,6 +87,25 @@ import { FleetService, FleetUnit } from '../../services/fleet.service';
 export class Sidebar {
   fleetService = inject(FleetService);
   injector = inject(Injector);
+
+  criticalUnits = computed(() => 
+    this.fleetService.units().filter(u => u.status === 'CRITICAL' || (parseFloat(u.battery) < 20))
+  );
+
+  currentAlertIndex = signal(0);
+  
+  currentAlert = computed(() => {
+    const units = this.criticalUnits();
+    return units.length > 0 ? units[this.currentAlertIndex() % units.length] : null;
+  });
+
+  nextAlert() {
+    this.currentAlertIndex.update(i => (i + 1) % this.criticalUnits().length);
+  }
+
+  prevAlert() {
+    this.currentAlertIndex.update(i => (i - 1 + this.criticalUnits().length) % this.criticalUnits().length);
+  }
 
   constructor() {
     effect(() => {
