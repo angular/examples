@@ -1,0 +1,23 @@
+<h1>Direct Widget Reference</h1>
+<form>
+  <label for="direct-angles">Number of Angles (3-40): </label>
+  <input id="direct-angles" name="directAngles" type="number" min="3" max="40" [(ngModel)]="directAngles" />
+</form>
+<angles-widget [(angles)]="directAngles"></angles-widget>
+
+<h1>Load Widget via <code>@mcp-ui/client</code></h1>
+@if (uiResource.isLoading()) {
+<p>Loading...</p>
+} @else if (uiResource.error(); as err) {
+<p>Error: {{ err.message }}</p>
+} @else if (uiResource.value()) {
+<form>
+  <label for="mcp-ui-angles">Number of Angles (3-40): </label>
+  <input id="mcp-ui-angles" name="mcpUiAngles" type="number" min="3" max="40" [(ngModel)]="mcpUiAngles" />
+</form>
+<ui-resource-renderer
+  (onUIAction)="handleUIAction($event)"
+  [resource]="uiResource.value()"
+  [htmlProps]="{ autoResizeIframe: true }"
+></ui-resource-renderer>
+}
