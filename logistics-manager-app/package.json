@@ -24,6 +24,7 @@
   "packageManager": "npm@10.9.3",
   "dependencies": {
     "@angular/aria": "^21.2.5",
+    "@angular/cdk": "21.2.14",
     "@angular/common": "^21.1.0",
     "@angular/compiler": "^21.1.0",
     "@angular/core": "^21.1.0",

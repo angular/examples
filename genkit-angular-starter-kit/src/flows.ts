@@ -6,14 +6,16 @@
  * found in the LICENSE file at https://angular.dev/license
  */
 import { Chat, genkit, Session } from 'genkit/beta';
-import { googleAI, gemini20Flash } from '@genkit-ai/googleai';
+import { googleAI } from '@genkit-ai/google-genai';
 import { parse } from 'partial-json';
 import { z } from 'zod';
 
-const model = gemini20Flash;
+const model = 'gemini-3.0-pro';
 
 const ai = genkit({
-  plugins: [googleAI()],
+  plugins: [googleAI({
+      apiKey: process.env.GEMINI_API_KEY 
+    })],
   model
 });
   

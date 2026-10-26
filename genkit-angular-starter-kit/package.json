@@ -13,6 +13,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^19.2.4",
+    "@angular/cdk": "19.2.19",
     "@angular/common": "^19.2.4",
     "@angular/compiler": "^19.2.4",
     "@angular/core": "^19.2.4",
@@ -24,6 +25,7 @@
     "@angular/router": "^19.2.4",
     "@angular/ssr": "^19.2.5",
     "@genkit-ai/express": "^1.0.4",
+    "@genkit-ai/google-genai": "1.40.1",
     "@genkit-ai/googleai": "^1.0.4",
     "data-urls": "^5.0.0",
     "express": "^4.18.2",

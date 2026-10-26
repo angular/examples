@@ -5,9 +5,8 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.dev/license
  */
-import { genkit, MessageData } from 'genkit/beta';
-import { z } from "zod";
-import { googleAI } from "@genkit-ai/googleai";
+import { genkit, MessageData, z } from 'genkit/beta';
+import { googleAI } from "@genkit-ai/googleai"; // @genkit-ai/google-genai
 import { vertexAI } from '@genkit-ai/vertexai';
 import { systemInstructions } from './prompts';
 import { DATA } from './data-store';

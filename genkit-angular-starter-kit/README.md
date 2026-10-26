@@ -13,11 +13,12 @@ Here's an example of the running application:
 
 In order to run this example, make sure that your development environment meets the following requirements:
 
-* Node.js v20+
-* npm
+- Node.js v20+
+- npm
 
 This example will use the Gemini API which provides a generous free tier and does not require a credit card to get started.
 To use the Gemini API, you'll need an API key. If you don't already have one, create a key in Google AI Studio.
+export GEMINI_API_KEY=
 
 1. [Get an API key from Google AI Studio](https://makersuite.google.com/app/apikey)
 1. After you’ve created an API key, set the `GEMINI_API_KEY` environment variable to your key with the command `export GEMINI_API_KEY=<your API key>`
@@ -33,7 +34,7 @@ This application uses [server-side rendering](https://angular.dev/guide/ssr) and
 how to add integrate [Genkit flows](https://firebase.google.com/docs/genkit/flows) into the
 Node.js Express server Angular uses to render content.
 
-The flow is defined in  `src/flows.ts`. Our flow, named `chatFlow` demonstrates how to use
+The flow is defined in `src/flows.ts`. Our flow, named `chatFlow` demonstrates how to use
 [persistent chat sessions](https://firebase.google.com/docs/genkit/chat) to return a response from
 the agent, as well as several options the user can choose from, if applicable. This application also
 demonstrates how to use of [Genkit tools](https://firebase.google.com/docs/genkit/tool-calling).
@@ -45,7 +46,7 @@ You can customize this flow or even add new flows following this same pattern. W
 
 ## Looking for inspiration?
 
-For a more advanced example of using Genkit with Angular, check out the 
+For a more advanced example of using Genkit with Angular, check out the
 [genkit-angular-story-generator repo](../genkit-angular-story-generator/), which is an interactive
 graphic novel builder.
 
@@ -60,3 +61,5 @@ inspecting and debugging Genkit flows in your application. You can run your app 
 
 1. Installing the [Genkit Command Line Interface (CLI)](https://firebase.google.com/docs/genkit/devtools#command_line_interface_cli)
 1. Running `npm run start:with-genkit-ui`
+
+https://firebase.google.com/docs/genkit/plugins/google-genai or https://genkit.dev/docs/js/integrations/google-genai/
